@@ -1,5 +1,5 @@
 <template lang="pug">
-  h1 Hello
+  VHeader
 </template>
 
 <script>
