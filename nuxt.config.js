@@ -43,4 +43,8 @@ export default {
   build: {},
 
   css: ["~assets/sass/main.sass"],
+
+  publicRuntimeConfig: {
+    api: process.env.BACKEND_URL,
+  },
 };
