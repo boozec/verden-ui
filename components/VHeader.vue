@@ -19,7 +19,7 @@
             .flex.space-x-4
               a.text-white.px-3.py-2.rounded-md.text-sm.font-medium(:class="[routeName == 'index' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Home
               a.text-white.px-3.py-2.rounded-md.text-sm.font-medium(:class="[routeName == 'models' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Models
-        .absolute.inset-y-0.right-0.flex.items-center.pr-2(class="sm:static sm:inset-auto sm:ml-6 sm:pr-0")
+        .absolute.inset-y-0.right-0.flex.items-center.pr-2(class="sm:static sm:inset-auto sm:ml-6 sm:pr-0" v-if="isLogged")
           .relative.ml-3
             div
               button#user-menu-button.flex.rounded-full.bg-green-800.text-sm(
@@ -27,11 +27,14 @@
                 @click="boxUserInfo = !boxUserInfo"
               )
                 span.sr-only Open user menu
-                img.h-8.w-8.rounded-full(src="https://avatars.githubusercontent.com/u/20584215" alt="Avatar")
+                img.h-8.w-8.rounded-full(v-if="me" :src="baseAPI+''+me.avatar" alt="Avatar")
             .absolute.right-0.z-10.mt-2.w-48.origin-top-right.rounded-md.bg-white.py-1.shadow-lg.ring-1.ring-black.ring-opacity-5(class="focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" v-if="boxUserInfo")
               a#user-menu-item-0.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Your Profile
               a#user-menu-item-1.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Settings
               a#user-menu-item-2.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Sign out
+        .absolute.inset-y-0.right-0.flex.items-center.pr-2(class="sm:static sm:inset-auto sm:ml-6 sm:pr-0" v-else)
+          a
+            button.text-white Entra
     #mobile-menu(class="sm:hidden" v-if="boxInfo")
       .space-y-1.px-2.pt-2.pb-3
         a.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(:class="[routeName == 'index' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Home
@@ -39,6 +42,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "VHeader",
   data() {
@@ -46,10 +51,18 @@ export default {
       boxInfo: false,
       boxUserInfo: false,
       routeName: "",
+      baseAPI: "",
     };
+  },
+  computed: {
+    ...mapGetters("auth", ["isLogged", "me"]),
   },
   created() {
     this.routeName = this.$route.name;
+    this.baseAPI = this.$config.api;
+    if (this.isLogged) {
+      this.$store.dispatch("auth/findMe");
+    }
   },
 };
 </script>
