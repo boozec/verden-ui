@@ -32,7 +32,7 @@
               .absolute.right-0.z-10.mt-2.w-48.origin-top-right.rounded-md.bg-white.py-1.shadow-lg.ring-1.ring-black.ring-opacity-5(class="focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" v-if="boxUserInfo")
                 a#user-menu-item-0.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Your Profile
                 a#user-menu-item-1.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Settings
-                a#user-menu-item-2.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Sign out
+                a#user-menu-item-2.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1" @click="logout") Sign out
           .absolute.inset-y-0.right-0.flex.items-center.pr-2(class="sm:static sm:inset-auto sm:ml-6 sm:pr-0" v-else)
             a(href="/signin")
               button.text-white Entra
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "VHeader",
@@ -69,6 +69,12 @@ export default {
     if (this.isLogged) {
       this.$store.dispatch("auth/findMe");
     }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch("auth/logout");
+      window.location.href = "/";
+    },
   },
 };
 </script>
