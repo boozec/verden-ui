@@ -1,5 +1,8 @@
 <template lang="pug">
-  VHeader
+  div
+    VHeader(pageName="Home")
+    main
+      .mx-auto.max-w-7xl.py-6(class="sm:px-6 lg:px-8")
 </template>
 
 <script>
