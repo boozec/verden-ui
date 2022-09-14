@@ -34,7 +34,7 @@
                 a#user-menu-item-1.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Settings
                 a#user-menu-item-2.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Sign out
           .absolute.inset-y-0.right-0.flex.items-center.pr-2(class="sm:static sm:inset-auto sm:ml-6 sm:pr-0" v-else)
-            a
+            a(href="/signin")
               button.text-white Entra
       #mobile-menu(class="sm:hidden" v-if="boxInfo")
         .space-y-1.px-2.pt-2.pb-3

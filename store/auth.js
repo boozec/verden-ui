@@ -17,7 +17,7 @@ export const getters = {
 
 export const mutations = {
   saveAccessToken: (state, value) => {
-    localStorage.setItem("access_token", key);
+    localStorage.setItem("access_token", value);
     state.token = value;
   },
   // Remove access_token and credentials from the browser data
@@ -48,8 +48,7 @@ export const actions = {
         res.data = await response.json();
         res.status = response.status;
         if (res.status == 200) {
-          // This is usefull if the login is called by `keepAccess`
-          commit("saveUserInfo", res.data);
+          commit("saveAccessToken", res.data.access_token);
         } else {
           commit("logout");
         }
