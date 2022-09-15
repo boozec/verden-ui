@@ -28,7 +28,8 @@
                   @click="boxUserInfo = !boxUserInfo"
                 )
                   span.sr-only Open user menu
-                  img.h-8.w-8.rounded-full(v-if="me" :src="baseAPI+''+me.avatar" alt="Avatar")
+                  img.h-8.w-8.rounded-full(v-if="me && me.avatar" :src="baseAPI+''+me.avatar" alt="Avatar")
+                  span.h-8.w-8.rounded-full.bg-white.pt-1(v-else-if="me") {{ me.username[0] }}
               .absolute.right-0.z-10.mt-2.w-48.origin-top-right.rounded-md.bg-white.py-1.shadow-lg.ring-1.ring-black.ring-opacity-5(class="focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" v-if="boxUserInfo && me")
                 a#user-menu-item-0.block.px-4.py-2.text-sm.text-gray-700(:href="'/user/'+me.id" role="menuitem" tabindex="-1") Your Profile
                 a#user-menu-item-1.block.px-4.py-2.text-sm.text-gray-700(href="#" role="menuitem" tabindex="-1") Settings
