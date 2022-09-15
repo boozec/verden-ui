@@ -14,7 +14,7 @@
               .-space-y-px.rounded-md.shadow-sm
                 div
                   label.sr-only(for="username") Username
-                  input#username.relative.block.w-full.appearance-none.rounded-none.rounded-t-md.border.border-gray-300.px-3.py-2.text-gray-900.placeholder-gray-500(name="text" type="text" autocomplete="username" required class="focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Username" v-model="form.username")
+                  input#username.relative.block.w-full.appearance-none.rounded-none.rounded-t-md.border.border-gray-300.px-3.py-2.text-gray-900.placeholder-gray-500(name="username" type="text" autocomplete="username" required class="focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Username" v-model="form.username")
                 div
                   label.sr-only(for="password") Password
                   input#password.relative.block.w-full.appearance-none.rounded-none.rounded-b-md.border.border-gray-300.px-3.py-2.text-gray-900.placeholder-gray-500(name="password" type="password" autocomplete="current-password" required class="focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" v-model="form.password")

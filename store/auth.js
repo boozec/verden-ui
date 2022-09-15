@@ -76,6 +76,10 @@ export const actions = {
       .then(async (response) => {
         res.data = await response.json();
         res.status = response.status;
+
+        if (res.status == 201) {
+          commit("saveAccessToken", res.data.access_token);
+        }
       })
       .catch((e) => {
         res.status = e.status;
