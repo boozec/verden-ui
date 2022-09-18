@@ -3,8 +3,8 @@ export const state = () => ({
 });
 
 export const getters = {
-  animation: (state) => {
-    return state.loading ? "animate-none" : "animate-spin";
+  isLoading: (state) => {
+    return state.loading;
   },
 };
 export const mutations = {
