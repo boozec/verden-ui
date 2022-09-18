@@ -27,7 +27,7 @@ export const actions = {
     let res = { status: 0, data: null };
     let api = this.$config.api;
 
-    page = page ? page : 1;
+    page = page ? page : 0;
 
     await fetch(`${api}/v1/models?page=${page}`, {
       headers: {
