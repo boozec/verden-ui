@@ -22,7 +22,7 @@ export const mutations = {
 
 export const actions = {
   // Get models usign `page`
-  async getModels({ commit, getters }, page) {
+  async getModels({ commit }, page) {
     commit("loadingStatus", true, { root: true });
     let res = { status: 0, data: null };
     let api = this.$config.api;
@@ -32,7 +32,6 @@ export const actions = {
     await fetch(`${api}/v1/models?page=${page}`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getters.accessToken}`,
       },
     })
       .then(async (response) => {
