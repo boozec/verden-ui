@@ -1,11 +1,18 @@
 <template lang="pug">
   .mx-auto.max-w-7xl.py-6(class="sm:px-6 lg:px-8")
     model-loading(v-if="isLoading")
-
+    section(v-else)
+      .grid.grid-cols-4.gap-4
+        model-box-card(
+          v-for="model in models"
+          :key="model.id"
+          :model="model"
+        )
 </template>
 
 <script>
 import ModelLoading from "@/components/ModelLoading.vue";
+import ModelBoxCard from "@/components/ModelBoxCard.vue";
 
 import { mapGetters } from "vuex";
 
@@ -17,10 +24,12 @@ export default {
   },
   components: {
     "model-loading": ModelLoading,
+    "model-box-card": ModelBoxCard,
   },
   computed: {
     ...mapGetters(["isLoading"]),
     ...mapGetters("auth", ["isLogged"]),
+    ...mapGetters("models", ["models"]),
   },
   created() {
     this.$store.dispatch("models/getModels");
