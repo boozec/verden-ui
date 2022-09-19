@@ -49,4 +49,27 @@ export const actions = {
 
     return res;
   },
+  // Find a model by its id
+  async findModal({ commit }, id) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    await fetch(`${api}/v1/models/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(async (response) => {
+        res.data = await response.json();
+        res.status = response.status;
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+
+    return res;
+  },
 };
