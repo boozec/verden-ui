@@ -18,7 +18,7 @@
               img.block.h-8.w-auto(src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company")
             .hidden(class="sm:ml-6 sm:block")
               .flex.space-x-4
-                a.text-white.px-3.py-2.rounded-md.text-sm.font-medium(:class="[routeName == 'index' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Home
+                a.text-white.px-3.py-2.rounded-md.text-sm.font-medium(:class="[routeName == 'index' ? 'bg-green-900': 'text-gray-300']" href="/" aria-current="page") Home
                 a.text-white.px-3.py-2.rounded-md.text-sm.font-medium(:class="[routeName == 'models' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Models
           .absolute.inset-y-0.right-0.flex.items-center.pr-2(class="sm:static sm:inset-auto sm:ml-6 sm:pr-0" v-if="isLogged")
             .relative.ml-3
@@ -38,7 +38,7 @@
               button.text-white Entra
       #mobile-menu(class="sm:hidden" v-if="boxInfo")
         .space-y-1.px-2.pt-2.pb-3
-          a.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(:class="[routeName == 'index' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Home
+          a.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(:class="[routeName == 'index' ? 'bg-green-900': 'text-gray-300']" href="/" aria-current="page") Home
           a.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(:class="[routeName == 'models' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Models
 
     header.bg-white.shadow(v-if="pageName")
