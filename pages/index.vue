@@ -1,8 +1,8 @@
 <template lang="pug">
-  .mx-auto.max-w-7xl.py-6(class="sm:px-6 lg:px-8")
+  .mx-auto.w-90p.py-6(class="sm:px-6 lg:px-8 md:max-w-7xl")
     model-loading(v-if="isLoading")
     section(v-else)
-      .grid.grid-cols-4.gap-4
+      .grid.grid-cols-1.gap-4(class="md:grid-cols-4")
         model-box-card(
           v-for="model in models"
           :key="model.id"

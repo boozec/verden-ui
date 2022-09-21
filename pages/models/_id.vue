@@ -1,9 +1,9 @@
 <template lang="pug">
-  .mx-auto.max-w-7xl.py-6#modelpage(class="sm:px-6 lg:px-8")
+  .mx-auto.w-90p.py-6#modelpage(class="sm:px-6 lg:px-8 md:max-w-7xl")
     section.mb-5
       .flow-root
         .float-left
-          h1.text-3xl.font-bold.border-green-500.border-b-2.pb-3.w-max {{ model.name }}
+          h1.text-3xl.font-bold.border-green-500.border-b-2.pb-3.w-full.mb-2(class="md:w-max md:mb-0") {{ model.name }}
         .float-right(v-if="model.author")
           .flex
             .mr-3.float-left
@@ -34,12 +34,12 @@
               :src="baseAPI + '' + model.uploads[selectedUpload].filepath"
               :backgroundColor="'#111827'"
             )
-        .w-full.mt-8(class="md:w-1/5 md:mt-0" v-if="model")
+        .w-full.mt-8.h-auto(class="md:w-1/5 md:mt-0" v-if="model")
           .grid.grid-cols-3.gap-4.h-full.overflow-y-auto.grid-mini(class="md:grid-cols-2")
-            .border-2.border-gray-300.bg-gray-300.w-24.h-24.rounded-xl.grid.items-center.justify-items-center.overflow-hidden.cursor-pointer(
+            .border-2.border-gray-300.bg-gray-300.w-20.h-20.rounded-xl.grid.items-center.justify-items-center.overflow-hidden.cursor-pointer(
               v-for="upload, i in model.uploads"
               :key="upload.id"
-              :class="{'border-green-700 drop-md': selectedUpload == i}"
+              :class="{'border-green-700 drop-md md:w-24 md:h-24': selectedUpload == i}"
               @click="selectedUpload = i"
             )
               img(
@@ -60,7 +60,7 @@
               )
 
     section.mt-5
-      .grid.grid-cols-6.gap-5.mb-5
+      .grid.grid-cols-2.gap-5.mb-5(class="md:grid-cols-6")
         .card.shadow-sm.rounded-lg.bg-white.p-4.w-full
           h3.font-bold Created: 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
