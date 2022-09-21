@@ -1,7 +1,19 @@
 <template lang="pug">
   .mx-auto.max-w-7xl.py-6#modelpage(class="sm:px-6 lg:px-8")
     section.mb-5
-      h1.text-3xl.font-bold.border-green-500.border-b-2.pb-3.w-max {{ model.name }}
+      .flow-root
+        .float-left
+          h1.text-3xl.font-bold.border-green-500.border-b-2.pb-3.w-max {{ model.name }}
+        .float-right(v-if="model.author")
+          .flex
+            .mr-3.float-left
+              user-avatar(:data="model.author")
+            p.leading-8
+              a.text-green-800(class="hover:text-green-700" :href="'/users/'+model.author.username")
+                | @
+                span.underline {{ model.author.username }}
+      .description.mt-3
+        p {{ model.description }}
 
     .images.shadow-sm.rounded-lg.bg-white.p-4.w-full
       .block.gap-4.h-full(class="md:flex")
@@ -108,6 +120,7 @@
 
 <script>
 import { ModelStl, ModelObj } from "vue-3d-model";
+import UserAvatar from "@/components/UserAvatar.vue";
 
 export default {
   name: "ModelView",
@@ -129,6 +142,7 @@ export default {
   components: {
     ModelStl,
     ModelObj,
+    "user-avatar": UserAvatar,
   },
   created() {
     this.id = this.$route.params.id;
