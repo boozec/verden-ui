@@ -39,7 +39,7 @@
             .border-2.border-gray-300.bg-gray-300.w-20.h-20.rounded-xl.grid.items-center.justify-items-center.overflow-hidden.cursor-pointer(
               v-for="upload, i in model.uploads"
               :key="upload.id"
-              :class="{'border-green-700 drop-md md:w-24 md:h-24': selectedUpload == i}"
+              :class="{'md:w-24 md:h-24': true, 'border-green-700': selectedUpload == i}"
               @click="selectedUpload = i"
             )
               img(
