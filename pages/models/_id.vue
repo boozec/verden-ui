@@ -12,8 +12,13 @@
               :src="baseAPI + '' + model.uploads[selectedUpload].filepath"
             )
             model-stl(
-              v-else
+              v-else-if="isStl(model.uploads[selectedUpload].filepath)"
               :rotate="rotate"
+              :src="baseAPI + '' + model.uploads[selectedUpload].filepath"
+              :backgroundColor="'#111827'"
+            )
+            model-obj(
+              v-else-if="isObj(model.uploads[selectedUpload].filepath)"
               :src="baseAPI + '' + model.uploads[selectedUpload].filepath"
               :backgroundColor="'#111827'"
             )
@@ -30,11 +35,16 @@
                 :src="baseAPI + '' + upload.filepath"
               )
               model-stl(
-                v-else
+                v-else-if="isStl(model.uploads[selectedUpload].filepath)"
                 :rotate="rotate"
                 :src="baseAPI + '' + upload.filepath"
                 :backgroundColor="'#D1D5DB'"
                 :controlsOptions="{'enablePan': false, 'enableZoom': false, 'enableRotate': false}"
+              )
+              model-obj(
+                v-else-if="isObj(model.uploads[selectedUpload].filepath)"
+                :src="baseAPI + '' + upload.filepath"
+                :backgroundColor="'#D1D5DB'"
               )
 
     section.mt-5
@@ -97,7 +107,7 @@
 </template>
 
 <script>
-import { ModelStl } from "vue-3d-model";
+import { ModelStl, ModelObj } from "vue-3d-model";
 
 export default {
   name: "ModelView",
@@ -118,6 +128,7 @@ export default {
   },
   components: {
     ModelStl,
+    ModelObj,
   },
   created() {
     this.id = this.$route.params.id;
@@ -135,13 +146,22 @@ export default {
     });
   },
   methods: {
+    checkExt(path, ext) {
+      return path.indexOf("." + ext) > 0;
+    },
     isImage(path) {
       return (
-        path.indexOf(".png") > 0 ||
-        path.indexOf(".jpg") > 0 ||
-        path.indexOf(".jpeg") > 0 ||
-        path.indexOf(".webp") > 0
+        this.checkExt(path, "png") ||
+        this.checkExt(path, "jpg") ||
+        this.checkExt(path, "jpeg") ||
+        this.checkExt(path, "webp")
       );
+    },
+    isStl(path) {
+      return this.checkExt(path, "stl");
+    },
+    isObj(path) {
+      return this.checkExt(path, "obj");
     },
     getFileName(path) {
       return path.split("/").at(-1);
