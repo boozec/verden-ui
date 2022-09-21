@@ -139,6 +139,11 @@ export default {
       boxFilesToDownload: false,
     };
   },
+  head() {
+    return {
+      title: this.model.name + " · Verden",
+    };
+  },
   components: {
     ModelStl,
     ModelObj,
@@ -148,7 +153,7 @@ export default {
     this.id = this.$route.params.id;
     this.baseAPI = this.$config.api;
 
-    this.$store.dispatch("models/findModal", this.id).then((response) => {
+    this.$store.dispatch("models/findModel", this.id).then((response) => {
       if (response.status != 200) {
         window.location.href = "/models";
       } else {
