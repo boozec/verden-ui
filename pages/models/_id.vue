@@ -15,7 +15,7 @@
       .description.mt-3
         p {{ model.description }}
 
-    .images.shadow-sm.rounded-lg.bg-white.p-4.w-full
+    .images.shadow-sm.rounded-lg.bg-white.p-4.w-full(v-if="model.uploads")
       .block.gap-4.h-full(class="md:flex")
         .w-full(class="md:w-4/5")
           .image.bg-gray-900.border-2.rounded-xl.w-full.h-full.overflow-hidden(v-if="model.uploads && model.uploads[selectedUpload]")
