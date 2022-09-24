@@ -5,7 +5,7 @@
       .fixed.inset-0.z-10.overflow-y-auto
         .flex.min-h-full.items-center.justify-center.p-4.text-center
           .relative.transform.overflow-hidden.rounded-lg.bg-white.shadow-xl.transition-all(class="w-10/12 sm:w-8/12")
-            file-preview(:path="openPreview")
+            file-preview(:path="openPreview" controls="1")
             .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
               button.mt-3.inline-flex.w-full.justify-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-base.font-medium.text-gray-700.shadow-sm(
                 type="button"

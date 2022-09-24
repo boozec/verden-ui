@@ -1,6 +1,6 @@
 <template lang="pug">
-  .file-preview
-    img(
+  .file-preview.h-full
+    img.h-full.block.mx-auto(
       v-if="isImage(path)"
       :src="baseAPI + '' + path"
     )
@@ -8,12 +8,14 @@
       v-else-if="isStl(path)"
       :rotate="rotate"
       :src="baseAPI + '' + path"
-      :backgroundColor="'#D1D5DB'"
+      :backgroundColor="bg ? bg : '#D1D5DB'"
+      :controlsOptions="{'enablePan': controls ? true : false, 'enableZoom': controls ? true : false, 'enableRotate': controls ? true : false}"
     )
     model-obj(
       v-else-if="isObj(path)"
       :src="baseAPI + '' + path"
-      :backgroundColor="'#D1D5DB'"
+      :backgroundColor="bg ? bg : '#D1D5DB'"
+      :controlsOptions="{'enablePan': controls ? true : false, 'enableZoom': controls ? true : false, 'enableRotate': controls ? true : false}"
     )
 </template>
 
@@ -22,7 +24,7 @@ import { ModelStl, ModelObj } from "vue-3d-model";
 
 export default {
   name: "FilePreview",
-  props: ["path"],
+  props: ["path", "bg", "controls"],
   data() {
     return {
       baseAPI: "",

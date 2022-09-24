@@ -70,21 +70,7 @@
       .block.gap-4.h-full(class="md:flex")
         .w-full(class="md:w-4/5")
           .image.bg-gray-900.border-2.rounded-xl.w-full.h-full.overflow-hidden(v-if="model.uploads && model.uploads[selectedUpload]")
-            img.h-full.block.mx-auto(
-              v-if="isImage(model.uploads[selectedUpload].filepath)"
-              :src="baseAPI + '' + model.uploads[selectedUpload].filepath"
-            )
-            model-stl(
-              v-else-if="isStl(model.uploads[selectedUpload].filepath)"
-              :rotate="rotate"
-              :src="baseAPI + '' + model.uploads[selectedUpload].filepath"
-              :backgroundColor="'#111827'"
-            )
-            model-obj(
-              v-else-if="isObj(model.uploads[selectedUpload].filepath)"
-              :src="baseAPI + '' + model.uploads[selectedUpload].filepath"
-              :backgroundColor="'#111827'"
-            )
+            file-preview(:path="model.uploads[selectedUpload].filepath" bg="#111827" controls="1")
         .w-full.mt-8.h-auto(class="md:w-1/5 md:mt-0" v-if="model")
           .grid.grid-cols-3.gap-4.h-full.overflow-y-auto.grid-mini(class="md:grid-cols-2")
             .border-2.border-gray-300.bg-gray-300.w-20.h-20.rounded-xl.grid.items-center.justify-items-center.overflow-hidden.cursor-pointer(
@@ -93,22 +79,7 @@
               :class="{'md:w-24 md:h-24': true, 'border-green-700': selectedUpload == i}"
               @click="selectedUpload = i"
             )
-              img(
-                v-if="isImage(upload.filepath)"
-                :src="baseAPI + '' + upload.filepath"
-              )
-              model-stl(
-                v-else-if="isStl(upload.filepath)"
-                :rotate="rotate"
-                :src="baseAPI + '' + upload.filepath"
-                :backgroundColor="'#D1D5DB'"
-                :controlsOptions="{'enablePan': false, 'enableZoom': false, 'enableRotate': false}"
-              )
-              model-obj(
-                v-else-if="isObj(upload.filepath)"
-                :src="baseAPI + '' + upload.filepath"
-                :backgroundColor="'#D1D5DB'"
-              )
+              file-preview(:path="upload.filepath")
 
     section.mt-5
       .grid.grid-cols-2.gap-5.mb-5(class="md:grid-cols-6")
@@ -170,7 +141,7 @@
 </template>
 
 <script>
-import { ModelStl, ModelObj } from "vue-3d-model";
+import FilePreview from "@/components/FilePreview.vue";
 import UserAvatar from "@/components/UserAvatar.vue";
 
 import { mapGetters } from "vuex";
@@ -199,9 +170,8 @@ export default {
     };
   },
   components: {
-    ModelStl,
-    ModelObj,
     "user-avatar": UserAvatar,
+    "file-preview": FilePreview,
   },
   computed: {
     ...mapGetters(["isLoading"]),
@@ -223,23 +193,6 @@ export default {
     });
   },
   methods: {
-    checkExt(path, ext) {
-      return path.indexOf("." + ext) > 0;
-    },
-    isImage(path) {
-      return (
-        this.checkExt(path, "png") ||
-        this.checkExt(path, "jpg") ||
-        this.checkExt(path, "jpeg") ||
-        this.checkExt(path, "webp")
-      );
-    },
-    isStl(path) {
-      return this.checkExt(path, "stl") || this.checkExt(path, "sla");
-    },
-    isObj(path) {
-      return this.checkExt(path, "obj") || this.checkExt(path, "octet-stream");
-    },
     getFileName(path) {
       return path.split("/").at(-1);
     },
