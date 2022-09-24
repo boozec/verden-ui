@@ -98,14 +98,14 @@
                 :src="baseAPI + '' + upload.filepath"
               )
               model-stl(
-                v-else-if="isStl(model.uploads[selectedUpload].filepath)"
+                v-else-if="isStl(upload.filepath)"
                 :rotate="rotate"
                 :src="baseAPI + '' + upload.filepath"
                 :backgroundColor="'#D1D5DB'"
                 :controlsOptions="{'enablePan': false, 'enableZoom': false, 'enableRotate': false}"
               )
               model-obj(
-                v-else-if="isObj(model.uploads[selectedUpload].filepath)"
+                v-else-if="isObj(upload.filepath)"
                 :src="baseAPI + '' + upload.filepath"
                 :backgroundColor="'#D1D5DB'"
               )
