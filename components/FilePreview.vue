@@ -1,5 +1,5 @@
 <template lang="pug">
-  .file-preview.h-full
+  .file-preview.h-full.overflow-hidden
     img.h-full.block.mx-auto(
       v-if="isImage(path)"
       :src="baseAPI + '' + path"
