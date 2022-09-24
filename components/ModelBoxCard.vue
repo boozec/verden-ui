@@ -17,7 +17,7 @@
         .mr-3.float-left
           user-avatar(:data="model.author")
         p.leading-8
-          a.text-green-800(class="hover:text-green-700" :href="'/users/'+model.author.username")
+          a.text-green-800(class="hover:text-green-700" :href="'/user/'+model.author_id")
             | @
             span.underline {{ model.author.username }}
 
