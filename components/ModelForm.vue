@@ -151,8 +151,8 @@
           p.text-sm.text-gray-700.mt-2(v-if="!form.id") You will add assets like images and STL/OBJ later.
       div(v-else)
         .space-y-6.bg-white.px-4.py-5(class="sm:p-6")
-          h3 Manage '{{ form.name }}' already uploaded files
-          ul.divide-y.divide-gray-200.rounded-b-md.border.border-gray-200(role="list")
+          h3(v-if="form.uploads") Manage '{{ form.name }}' already uploaded files
+          ul.divide-y.divide-gray-200.rounded-b-md.border.border-gray-200(role="list" v-if="form.uploads")
             li.flex.items-center.justify-between.py-3.pl-3.pr-4.text-sm(v-for="upload in form.uploads" :key="upload.id")
               .flex.w-0.flex-1.items-center
                 svg.h-5.w-5.flex-shrink-0.text-gray-400(xmlns="http://www.w3.org/2000/svg", viewbox="0 0 20 20", fill="currentColor", aria-hidden="true")
@@ -161,7 +161,7 @@
               .ml-4
                 a.font-medium.text-black-700.cursor-pointer.mr-2(class="hover:underline" @click="openPreview = upload.filepath") Preview
                 a.font-medium.text-red-700.cursor-pointer(class="hover:underline" @click="boxDeleteModelUpload = upload.id") Delete
-          hr
+          hr(v-if="form.uploads")
           h3 Add new uploads
           label.inline-flex.leading-6.justify-center.rounded-md.border.border-transparent.bg-green-600.py-2.px-4.text-sm.font-medium.text-white.shadow-sm.cursor-pointer(
             class="hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
