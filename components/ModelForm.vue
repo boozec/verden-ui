@@ -182,7 +182,25 @@
               .flex.w-0.flex-1.items-center
                 svg.h-5.w-5.flex-shrink-0.text-gray-400(xmlns="http://www.w3.org/2000/svg", viewbox="0 0 20 20", fill="currentColor", aria-hidden="true")
                   path(fill-rule="evenodd", d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z", clip-rule="evenodd")
-                span.ml-2.w-0.flex-1.truncate(v-if="checkExt(file.name)") {{ file.name }} {{ file.uploaded }}
+                span.ml-2.w-0.flex-1.flex.truncate(v-if="checkExt(file.name)") {{ file.name }}
+                  svg(
+                    class="ml-2 w-6 h-6 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    v-if="file.uploaded == 0"
+                  )
+                    circle(class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4")
+                    path(class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z")
+                  svg(
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#10b981" class="ml-2 w-6 h-6"
+                    v-else-if="file.uploaded == 1"
+                  )
+                    path(stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+                  svg(
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#dc2626" class="ml-2 w-6 h-6"
+                    v-else
+                  )
+                    path(stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z")
+
+
                 span.ml-2.w-0.flex-1.truncate.text-gray-500(v-else) 
                   s.text-red-500.mr-2 {{ file.name }}
                   | (this file type is not supported, so it'll not be uploaded)
@@ -260,6 +278,7 @@ export default {
     manageUploads(event) {
       for (const file of event.target.files) {
         if (this.checkExt(file.name)) {
+          file.uploaded = 0;
           this.$store
             .dispatch("models/upload", { id: this.form.id, file })
             .then((response) => {
@@ -270,10 +289,10 @@ export default {
                   .then((response) => {
                     this.form.uploads = response.data.uploads;
                   });
-                file.uploaded = true;
+                file.uploaded = 1;
               } else {
                 this.$toast.error(`Error uploading '${file.name}'`);
-                file.uploaded = false;
+                file.uploaded = -1;
               }
             });
         }
