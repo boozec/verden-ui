@@ -10,8 +10,16 @@
           input(type="hidden" name="remember" value="true")
           .-space-y-px.rounded-md.shadow-sm
             div
+              label.sr-only(for="username") Username
+              input#name.relative.block.w-full.appearance-none.rounded-none.rounded-t-md.border.border-gray-300.px-3.py-2.text-gray-900.placeholder-gray-500(
+                name="name" type="text" autocomplete="name" required
+                class="focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                :class="{'border-red-500 z-10' : errors.name }"
+                placeholder="Your name" v-model="form.name"
+              )
+            div
               label.sr-only(for="email") Email
-              input#email.relative.block.w-full.appearance-none.rounded-none.rounded-t-md.border.border-gray-300.px-3.py-2.text-gray-900.placeholder-gray-500(
+              input#email.relative.block.w-full.appearance-none.rounded-none.border.border-gray-300.px-3.py-2.text-gray-900.placeholder-gray-500(
                 name="email" type="email" autocomplete="username" required
                 class="focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm border-2"
                 :class="{'border-red-500 z-10' : errors.email }"
@@ -95,6 +103,10 @@ export default {
 
           if (err.indexOf("password:") >= 0) {
             this.$set(this.errors, "password1", true);
+          }
+
+          if (err.indexOf("name:") >= 0) {
+            this.$set(this.errors, "name", true);
           }
 
           if (err.indexOf("email:") >= 0) {
