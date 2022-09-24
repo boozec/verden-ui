@@ -42,9 +42,10 @@ export default {
         if (response.status != 200) {
           window.location.href = "/models";
         } else {
-          this.model = response.data;
-          if (!(this.model.author_id == this.me.id || this.me.is_staff)) {
+          if (!(response.data.author_id == this.me.id || this.me.is_staff)) {
             window.location.href = "/models/" + this.id;
+          } else {
+            this.model = response.data;
           }
         }
       });
