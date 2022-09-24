@@ -155,11 +155,6 @@ export default {
       model: {},
       selectedUpload: -1,
       baseAPI: "",
-      rotate: {
-        x: -Math.PI / 2,
-        y: 0,
-        z: 0,
-      },
       boxFilesToDownload: false,
       boxDeleteModel: false,
     };
