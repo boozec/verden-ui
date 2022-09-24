@@ -4,6 +4,11 @@
       :class="{'h-48 w-48': big}"
       v-if="data.avatar" :src="baseAPI+''+data.avatar" alt="Avatar"
     )
+    img.h-8.w-8.rounded-full(
+      :class="{'h-48 w-48': big}"
+      :src="'https://ui-avatars.com/api/?size='+(big?192:32)+'&name='+(data.name || data.username[0])"
+      v-else 
+    )
     span.h-8.w-8.rounded-full.bg-gray-100.text-center.pt-1.block(
       :class="{'h-48 w-48': big}"
       v-else
