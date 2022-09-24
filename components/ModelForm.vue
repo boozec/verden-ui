@@ -1,5 +1,17 @@
 <template lang="pug">
   form.mt-3
+    .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="openPreview")
+      .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
+      .fixed.inset-0.z-10.overflow-y-auto
+        .flex.min-h-full.items-center.justify-center.p-4.text-center
+          .relative.transform.overflow-hidden.rounded-lg.bg-white.shadow-xl.transition-all(class="w-10/12 sm:w-8/12")
+            file-preview(:path="openPreview")
+            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
+              button.mt-3.inline-flex.w-full.justify-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-base.font-medium.text-gray-700.shadow-sm(
+                type="button"
+                class="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="openPreview = null"
+              ) Close
     .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxDeleteModelUpload > 0")
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-10.overflow-y-auto
@@ -147,7 +159,7 @@
                   path(fill-rule="evenodd", d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z", clip-rule="evenodd")
                 span.ml-2.w-0.flex-1.truncate {{ getFileName(upload.filepath) }}
               .ml-4
-                a.font-medium.text-black-700.cursor-pointer.mr-2(class="hover:underline") Preview
+                a.font-medium.text-black-700.cursor-pointer.mr-2(class="hover:underline" @click="openPreview = upload.filepath") Preview
                 a.font-medium.text-red-700.cursor-pointer(class="hover:underline" @click="boxDeleteModelUpload = upload.id") Delete
           hr
           h3 Add new uploads
@@ -177,6 +189,8 @@
 </template>
 
 <script>
+import FilePreview from "@/components/FilePreview.vue";
+
 import { mapGetters } from "vuex";
 
 export default {
@@ -187,11 +201,15 @@ export default {
       form: {},
       tab: "info",
       boxDeleteModelUpload: 0,
+      openPreview: null,
       filesToUpload: [],
     };
   },
   computed: {
     ...mapGetters(["isLoading"]),
+  },
+  components: {
+    "file-preview": FilePreview,
   },
   created() {
     if (this.data) this.form = { ...this.data };
