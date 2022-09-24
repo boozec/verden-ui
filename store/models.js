@@ -149,4 +149,56 @@ export const actions = {
 
     return res;
   },
+  // Create a model upload
+  async upload({ commit, rootGetters }, payload) {
+    commit("loadingStatus", true, { root: true });
+    let status = 400;
+    let api = this.$config.api;
+
+    const form = new FormData();
+    form.append("file", payload.file);
+
+    await fetch(`${api}/v1/models/${payload.id}/upload`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+      body: form,
+    })
+      .then(async (response) => {
+        status = response.status;
+      })
+      .catch((e) => {
+        status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+
+    return status;
+  },
+  // Delete a model upload
+  async deleteUpload({ commit, rootGetters }, data) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    await fetch(`${api}/v1/models/${data.id}/upload/${data.uid}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+    })
+      .then(async (response) => {
+        res.status = response.status;
+        res.data = await response.text();
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+
+    return res;
+  },
 };
