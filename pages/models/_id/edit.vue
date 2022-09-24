@@ -17,7 +17,7 @@ export default {
   },
   head() {
     return {
-      title: "Modifica " + this.model.name + " · Verden",
+      title: "Edit " + this.model.name + " · Verden",
     };
   },
   components: {},
