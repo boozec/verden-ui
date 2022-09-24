@@ -235,10 +235,10 @@ export default {
       );
     },
     isStl(path) {
-      return this.checkExt(path, "stl");
+      return this.checkExt(path, "stl") || this.checkExt(path, "sla");
     },
     isObj(path) {
-      return this.checkExt(path, "obj");
+      return this.checkExt(path, "obj") || this.checkExt(path, "octet-stream");
     },
     getFileName(path) {
       return path.split("/").at(-1);
