@@ -1,11 +1,11 @@
 <template lang="pug">
   div(v-if="data")
     img.h-8.w-8.rounded-full(
-      :class="{'h-48 w-48': big}"
+      :class="{'h-32 w-32 sm:h-48 sm:w-48': big}"
       v-if="data.avatar" :src="baseAPI+''+data.avatar" alt="Avatar"
     )
     img.h-8.w-8.rounded-full(
-      :class="{'h-48 w-48': big}"
+      :class="{'h-32 w-32 sm:h-48 sm:w-48': big}"
       :src="'https://ui-avatars.com/api/?size='+(big?192:32)+'&name='+(data.name || data.username[0])"
       v-else 
     )

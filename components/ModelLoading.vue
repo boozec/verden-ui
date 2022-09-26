@@ -1,5 +1,5 @@
 <template lang="pug">
-  .grid.grid-cols-4.gap-4
+  .grid.gap-4(class="sm:grid-cols-4")
     .model.shadow-xl.rounded-lg.bg-white.p-4.w-full.h-80.animate-pulse
       .image.bg-green-100.rounded-xl.w-full.h-48
       .space-y-3.mt-5
