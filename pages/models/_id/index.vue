@@ -274,6 +274,9 @@ export default {
             this.$toast.success("Report created, thank you!");
             this.report.warning_note = null;
             this.boxReport = false;
+            this.$store.dispatch("warnings/filterWarnings", {
+              model_id: this.model.id,
+            });
           } else {
             this.$toast.error(response.data);
           }
