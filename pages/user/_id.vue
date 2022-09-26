@@ -1,6 +1,6 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6#modelpage(class="sm:px-6 lg:px-8 md:max-w-7xl")
-    .grid.mb-10.justify-items-center.text-center(class="sm:flex" v-if="user.username")
+    .grid.mb-10.justify-items-center.text-center(class="sm:flex sm:text-left" v-if="user.username")
       user-avatar(:data="user" big="1")
       .grid.p-0(class="sm:pl-7")
         h1.text-2xl.font-bold.self-end.flex(:title="user.username+' is an admin'") {{ user.name }} 
