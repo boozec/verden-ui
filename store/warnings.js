@@ -15,6 +15,33 @@ export const mutations = {
 };
 
 export const actions = {
+  // Filter warnings
+  async filterWarnings({ commit, rootGetters }, payload) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    await fetch(`${api}/v1/warnings/filter`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(async (response) => {
+        res.status = response.status;
+        const data = await response.json();
+        if (res.status == 200) {
+          commit("saveWarnings", data.results);
+        }
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+  },
   // Create a new warning
   async createWarning({ commit, rootGetters }, payload) {
     commit("loadingStatus", true, { root: true });
