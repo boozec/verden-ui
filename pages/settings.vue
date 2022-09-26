@@ -13,7 +13,7 @@
                 name="name"
                 class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
                 placeholder="John Doe"
-                v-model="me.name"
+                v-model="form.name"
               )
           div
             label.block.text-sm.font-medium.text-gray-700(for="username") Username
@@ -22,7 +22,7 @@
                 name="username"
                 class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
                 placeholder="john"
-                v-model="me.username"
+                v-model="form.username"
               )
           div
             label.block.text-sm.font-medium.text-gray-700(for="email") Email
@@ -32,9 +32,9 @@
                 name="email"
                 class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
                 placeholder="john@example.com"
-                v-model="me.email"
+                v-model="form.email"
               )
-        .py-3.text-right(class="sm:px-6")
+        .py-3.px-4.text-right(class="sm:px-6")
           button.inline-flex.justify-center.rounded-md.border.border-transparent.bg-green-600.py-2.px-4.text-sm.font-medium.text-white.shadow-sm(
             type="submit"
             :class="{'hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2': true, 'opacity-25 cursor-default': isLoading}"
@@ -67,9 +67,14 @@ export default {
   created() {
     if (!this.isLogged) window.location.href = "/signin?ref=/settings";
   },
+  watch: {
+    me: function (value) {
+      this.form = { ...value };
+    },
+  },
   methods: {
     save(event) {
-      const f = this.me;
+      const f = this.form;
 
       if (f.username && f.email) {
         this.$store.dispatch("users/editUser", f).then((response) => {
