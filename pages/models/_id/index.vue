@@ -1,5 +1,41 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6#modelpage(class="sm:px-6 lg:px-8 md:max-w-7xl")
+    .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxReport")
+      .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
+      .fixed.inset-0.z-10.overflow-y-auto
+        .flex.min-h-full.items-end.justify-center.p-4.text-center(class="sm:items-center sm:p-0")
+          .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(class="sm:my-8 sm:w-full sm:max-w-lg")
+            .bg-white.px-4.pt-5.pb-4(class="sm:p-6 sm:pb-4")
+              div(v-if="isLogged")
+                label.block.text-sm.font-medium.text-gray-700(for="warning_note") Note 
+                .mt-1
+                  textarea#description.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="warning_note" rows="3"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                    placeholder="'This model is so ugly!' That's an example of a bad report."
+                    v-model="report.warning_note"
+                    required
+                  )
+              div(v-else)
+                h2 You must <a class="underline" :href="'/signin?ref=/models/'+model.id">log in</a> first.
+            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
+              button.inline-flex.w-full.justify-center.rounded-md.border.border-transparent.bg-green-600.px-4.py-2.text-base.font-medium.text-white.shadow-sm(
+                type="button"
+                :class="{'hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm': true, 'opacity-25 cursor-default': isLoading}"
+                :disabled="isLoading" :readonly="isLoading" v-if="isLogged"
+                @click="sendReport"
+              )
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" v-if="isLoading">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                | Send report
+              button.mt-3.inline-flex.w-full.justify-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-base.font-medium.text-gray-700.shadow-sm(
+                type="button"
+                class="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="boxReport = false"
+              ) Cancel
+
     .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxDeleteModel")
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-10.overflow-y-auto
@@ -49,20 +85,28 @@
       .description.mt-3
         p {{ model.description }}
 
-    .mb-5.text-right(v-if="me && me.id == model.author_id")
+    .mb-5.text-right
+      button.inline-flex.leading-6.justify-center.rounded-md.border.border-transparent.bg-yellow-600.py-2.px-4.mr-2.text-sm.font-medium.text-white.shadow-sm(
+        class="hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+        @click="boxReport = true"
+      )
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+        </svg>
+        | Report
       a.inline-flex.leading-6.justify-center.rounded-md.border.border-transparent.bg-gray-600.py-2.px-4.mr-2.text-sm.font-medium.text-white.shadow-sm(
         class="hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-        :href="'/models/'+model.id+'/edit'"
+        :href="'/models/'+model.id+'/edit'" v-if="me && me.id == model.author_id"
       )
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
         </svg>
         | Edit
       button.inline-flex.leading-6.justify-center.rounded-md.border.border-transparent.bg-red-600.py-2.px-4.text-sm.font-medium.text-white.shadow-sm(
         class="hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-        @click="boxDeleteModel = !boxDeleteModel"
+        @click="boxDeleteModel = !boxDeleteModel" v-if="me && me.id == model.author_id"
       )
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
           <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
         </svg>
         | Delete
@@ -157,6 +201,8 @@ export default {
       baseAPI: "",
       boxFilesToDownload: false,
       boxDeleteModel: false,
+      boxReport: false,
+      report: {},
     };
   },
   head() {
@@ -170,7 +216,7 @@ export default {
   },
   computed: {
     ...mapGetters(["isLoading"]),
-    ...mapGetters("auth", ["me"]),
+    ...mapGetters("auth", ["me", "isLogged"]),
   },
   created() {
     this.id = this.$route.params.id;
@@ -206,6 +252,29 @@ export default {
             }
           });
       }
+    },
+    sendReport() {
+      if (!this.report.warning_note) {
+        this.$toast.warning(
+          "We want to prevent spam so, can you add more details about this report?"
+        );
+        return;
+      }
+
+      this.$store
+        .dispatch("warnings/createWarning", {
+          model_id: this.model.id,
+          note: this.report.warning_note,
+        })
+        .then((response) => {
+          if (response.status == 201) {
+            this.$toast.success("Report created, thank you!");
+            this.report.warning_note = null;
+            this.boxReport = false;
+          } else {
+            this.$toast.error(response.data);
+          }
+        });
     },
   },
 };
