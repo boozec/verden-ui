@@ -135,7 +135,7 @@
                 placeholder="PLA"
                 v-model="form.material"
               )
-        .py-3.text-right(class="sm:px-6")
+        .py-3.px-4.text-right(class="sm:px-6")
           button.inline-flex.justify-center.rounded-md.border.border-transparent.bg-green-600.py-2.px-4.text-sm.font-medium.text-white.shadow-sm(
             type="submit"
             :class="{'hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2': true, 'opacity-25 cursor-default': isLoading}"
