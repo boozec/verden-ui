@@ -87,4 +87,58 @@ export const actions = {
 
     return res;
   },
+  // Edit avatar
+  // FIX: use the right endpoint with `payload.id`, not `me`
+  async editAvatar({ commit, rootGetters }, payload) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    const body = new FormData();
+    body.append("file", payload.file);
+
+    await fetch(`${api}/v1/users/me/avatar`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+      body,
+    })
+      .then(async (response) => {
+        res.data = await response.json();
+        res.status = response.status;
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+
+    return res;
+  },
+  // Delete the avatar
+  // FIX: use the right endpoint with `id`, not `me`
+  async deleteAvatar({ commit, rootGetters }, id) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    await fetch(`${api}/v1/users/me/avatar`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+    })
+      .then(async (response) => {
+        res.status = response.status;
+        if (res.status != 200) res.data = await response.json();
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+
+    return res;
+  },
 };
