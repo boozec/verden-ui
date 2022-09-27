@@ -114,7 +114,7 @@
     .images.shadow-sm.rounded-lg.bg-white.p-4.w-full(v-if="model.uploads")
       .block.gap-4.h-full(class="md:flex")
         .w-full(class="md:w-4/5")
-          .image.bg-gray-900.border-2.rounded-xl.w-full.h-full.overflow-hidden(v-if="model.uploads && model.uploads[selectedUpload]")
+          .image.bg-gray-900.border-2.rounded-xl.w-full.h-64.overflow-hidden(class="sm:h-full" v-if="model.uploads && model.uploads[selectedUpload]")
             file-preview(:path="model.uploads[selectedUpload].filepath" bg="#111827" controls="1")
         .w-full.mt-8.h-auto(class="md:w-1/5 md:mt-0" v-if="model")
           .grid.grid-cols-3.gap-4.h-full.overflow-y-auto.grid-mini(class="md:grid-cols-2")
