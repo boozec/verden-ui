@@ -1,7 +1,7 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6(class="sm:px-6 lg:px-8 md:max-w-7xl")
-    h1.text-3xl.font-bold Create a new model
-    p Fill all the required fieds to upload your 3D model into Verden!
+    h1.text-3xl.font-bold(class="dark:text-white") Create a new model
+    p(class="dark:text-white") Fill all the required fieds to upload your 3D model into Verden!
     model-form
 </template>
 

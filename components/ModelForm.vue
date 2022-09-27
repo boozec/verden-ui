@@ -46,21 +46,21 @@
                 @click="boxDeleteModelUpload = 0"
               ) Cancel
     .shadow(class="sm:overflow-hidden sm:rounded-md")
-      .grid.grid-cols-2(v-if="form.id")
+      .grid.grid-cols-2(v-if="form.id" class="dark:bg-gray-600")
         button.p-2.duration-100(
           type="button"
-          :class="{'hover:bg-white': true, 'bg-white border-green-600 border-b-2': tab == 'info'}"
+          :class="{'dark:hover:bg-gray-300 hover:bg-white': true, 'bg-white dark:bg-gray-300 border-green-600 border-b-2': tab == 'info'}"
           @click="tab = 'info'"
         ) Info
         button.p-2.duration-100(
           type="button"
-          :class="{'hover:bg-white': true, 'bg-white border-green-600 border-b-2': tab == 'files'}"
+          :class="{'dark:hover:bg-gray-300 hover:bg-white': true, 'bg-white dark:bg-gray-300 border-green-600 border-b-2': tab == 'files'}"
           @click="tab = 'files'"
         ) Files
       div(v-if="tab == 'info'")
-        .space-y-6.bg-white.px-4.py-5(class="sm:p-6")
+        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-600")
           div
-            label.block.text-sm.font-medium.text-gray-700(for="name") Name
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="name") Name
             .mt-1
               input#name.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="name"
@@ -70,7 +70,7 @@
                 v-model="form.name"
               )
           div
-            label.block.text-sm.font-medium.text-gray-700(for="description") Description 
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="description") Description 
               span.text-gray-300 (Optional)
             .mt-1
               textarea#description.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
@@ -80,7 +80,7 @@
                 v-model="form.description"
               )
           div
-            label.block.text-sm.font-medium.text-gray-700(for="duration") Duration
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="duration") Duration
             .mt-1
               input#duration.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="duration"
@@ -92,7 +92,7 @@
               )
             p.text-sm.text-gray-500 Print duration in minutes
           div
-            label.block.text-sm.font-medium.text-gray-700(for="height") Height
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="height") Height
             .mt-1
               input#height.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="height"
@@ -104,7 +104,7 @@
               )
             p.text-sm.text-gray-500 Height in mm
           div
-            label.block.text-sm.font-medium.text-gray-700(for="weight") Weight
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="weight") Weight
             .mt-1
               input#weight.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="weight"
@@ -116,7 +116,7 @@
               )
             p.text-sm.text-gray-500 Weight in g
           div
-            label.block.text-sm.font-medium.text-gray-700(for="printer") Printer 
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="printer") Printer 
               span.text-gray-300 (Optional)
             .mt-1
               input#printer.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
@@ -126,7 +126,7 @@
                 v-model="form.printer"
               )
           div
-            label.block.text-sm.font-medium.text-gray-700(for="material") Material 
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="material") Material 
               span.text-gray-300 (Optional)
             .mt-1
               input#material.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
@@ -150,7 +150,7 @@
             | Save
           p.text-sm.text-gray-700.mt-2(v-if="!form.id") You will add assets like images and STL/OBJ later.
       div(v-else)
-        .space-y-6.bg-white.px-4.py-5(class="sm:p-6")
+        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-600 dark:text-white")
           h3(v-if="form.uploads") Manage '{{ form.name }}' already uploaded files
           ul.divide-y.divide-gray-200.rounded-b-md.border.border-gray-200(role="list" v-if="form.uploads")
             li.flex.items-center.justify-between.py-3.pl-3.pr-4.text-sm(v-for="upload in form.uploads" :key="upload.id")
@@ -160,7 +160,7 @@
                 span.ml-2.w-0.flex-1.truncate {{ getFileName(upload.filepath) }}
               .ml-4
                 a.font-medium.text-black-700.cursor-pointer.mr-2(class="hover:underline" @click="openPreview = upload.filepath") Preview
-                a.font-medium.text-red-700.cursor-pointer(class="hover:underline" @click="boxDeleteModelUpload = upload.id") Delete
+                a.font-medium.text-red-700.cursor-pointer(class="hover:underline dark:text-red-500" @click="boxDeleteModelUpload = upload.id") Delete
           hr(v-if="form.uploads")
           h3 Add new uploads
           label.inline-flex.leading-6.justify-center.rounded-md.border.border-transparent.bg-green-600.py-2.px-4.text-sm.font-medium.text-white.shadow-sm.cursor-pointer(

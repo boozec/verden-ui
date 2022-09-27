@@ -1,13 +1,13 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6(class="sm:px-6 lg:px-8 md:max-w-7xl")
-    h1.text-3xl.font-bold Settings
-    p Change your informations
+    h1.text-3xl.font-bold(class="dark:text-white") Settings
+    p(class="dark:text-white") Change your informations
 
     form.mt-3(v-if="me")
       .overflow-hidden.shadow(class="sm:rounded-md")
-        .space-y-6.bg-white.px-4.py-5(class="sm:p-6")
+        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-600")
           div
-            label.block.text-sm.font-medium.text-gray-700 Avatar
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white") Avatar
             span.text-green-500.text-xs(v-if="avatarChanged") Avatar changed. Reload this page and/or clear your browser cache.
             .mt-1.flex.items-center
               user-avatar(:data="me")
@@ -28,7 +28,7 @@
                 | Delete
 
           div
-            label.block.text-sm.font-medium.text-gray-700(for="name") Name
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="name") Name
             .mt-1
               input#name.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="name"
@@ -37,7 +37,7 @@
                 v-model="form.name"
               )
           div
-            label.block.text-sm.font-medium.text-gray-700(for="username") Username
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="username") Username
             .mt-1
               input#email.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="username"
@@ -46,7 +46,7 @@
                 v-model="form.username"
               )
           div
-            label.block.text-sm.font-medium.text-gray-700(for="email") Email
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="email") Email
             .mt-1
               input#email.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 type="email"
@@ -55,6 +55,18 @@
                 placeholder="john@example.com"
                 v-model="form.email"
               )
+
+          div
+            label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="theme") Theme
+            .mt-1
+              select(
+                class="cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              )
+                option(@click="$colorMode.preference = 'system'") System
+                option(@click="$colorMode.preference = 'light'") Light
+                option(@click="$colorMode.preference = 'dark'") Dark
+
+
         .py-3.px-4.text-right(class="sm:px-6")
           button.inline-flex.justify-center.rounded-md.border.border-transparent.bg-green-600.py-2.px-4.text-sm.font-medium.text-white.shadow-sm(
             type="submit"

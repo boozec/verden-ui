@@ -8,13 +8,13 @@
       v-else-if="isStl(path)"
       :rotate="rotate"
       :src="baseAPI + '' + path"
-      :backgroundColor="bg ? bg : '#D1D5DB'"
+      :backgroundColor="color ? color : '#D1D5DB'"
       :controlsOptions="{'enablePan': controls ? true : false, 'enableZoom': controls ? true : false, 'enableRotate': controls ? true : false}"
     )
     model-obj(
       v-else-if="isObj(path)"
       :src="baseAPI + '' + path"
-      :backgroundColor="bg ? bg : '#D1D5DB'"
+      :backgroundColor="color ? color : '#D1D5DB'"
       :controlsOptions="{'enablePan': controls ? true : false, 'enableZoom': controls ? true : false, 'enableRotate': controls ? true : false}"
     )
 </template>
@@ -33,6 +33,7 @@ export default {
         y: 0,
         z: 0,
       },
+      color: "",
     };
   },
   components: {
@@ -41,6 +42,11 @@ export default {
   },
   created() {
     this.baseAPI = this.$config.api;
+    if (this.$colorMode.preference == "light") {
+      this.color = this.bg;
+    } else {
+      this.color = "#ecfdf5";
+    }
   },
   methods: {
     checkExt(path, ext) {

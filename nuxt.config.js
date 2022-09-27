@@ -31,7 +31,7 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/tailwindcss
+    "@nuxtjs/color-mode",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/style-resources",
   ],
@@ -46,5 +46,9 @@ export default {
 
   publicRuntimeConfig: {
     api: process.env.BACKEND_URL,
+  },
+
+  colorMode: {
+    fallback: "light",
   },
 };

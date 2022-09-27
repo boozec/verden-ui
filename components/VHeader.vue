@@ -1,7 +1,7 @@
 <template lang="pug">
   div
-    nav.bg-green-800
-      .mx-auto.max-w-7xl.px-2(class="sm:px-6 lg:px-8")
+    nav.bg-green-800(class="dark:bg-gray-900")
+      .mx-auto.max-w-7xl.px-2(class="sm:px-6 lg:px-8 dark:border-b-1 dark:border-green-300")
         .relative.flex.h-16.items-center.justify-between
           .absolute.inset-y-0.left-0.flex.items-center(class="sm:hidden")
             button.inline-flex.items-center.justify-center.rounded-md.p-2.text-gray-400(

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .shadow-sm.rounded-lg.bg-white.p-4.w-full.mb-5(v-if="warnings.length")
+  .shadow-sm.rounded-lg.bg-white.p-4.w-full.mb-5(class="dark:bg-gray-600" v-if="warnings.length")
     .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxToResolve > 0")
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-10.overflow-y-auto
@@ -35,16 +35,16 @@
 
     .flow-root
       .float-left
-        h2.text-xl.font-bold(v-if="me && me.is_staff") Reports 
-        h2.text-xl.font-bold(v-else) My reports
-      .float-right.flex.cursor-pointer(@click="expandList = !expandList")
+        h2.text-xl.font-bold(class="dark:text-white" v-if="me && me.is_staff") Reports 
+        h2.text-xl.font-bold(class="dark:text-white" v-else) My reports
+      .float-right.flex.cursor-pointer(class="dark:text-white" @click="expandList = !expandList")
         span {{ notResolved(warnings) }} not resolved
         svg(xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="ml-2 w-6 h-6")
           path(stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" v-if="!expandList")
           path(stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" v-else)
 
     ul(role="list" v-if="me && expandList")
-      li.text-sm.rounded-md.border.border-gray-200.mt-3(v-for="warning in warnings" :key="warning.id")
+      li.text-sm.rounded-md.border.border-gray-200.mt-3(class="dark:bg-gray-50" v-for="warning in warnings" :key="warning.id")
         .py-3.pl-3.pr-4(v-if="!me.is_staff")
           h3.flex.leading-6.mb-2.float-right
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-6 h-6">

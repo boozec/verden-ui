@@ -3,9 +3,9 @@
     .flex.min-h-full.items-center.justify-center.py-12.px-4(class="sm:px-6 lg:px-8")
       .w-full.max-w-md.space-y-8
         div
-          h2.mt-6.text-center.text-3xl.font-bold.tracking-tight.text-gray-900 Sign in
+          h2.mt-6.text-center.text-3xl.font-bold.tracking-tight.text-gray-900(class="dark:text-white") Sign in
           p.mt-2.text-center.text-sm.text-gray-600 Or 
-            a.font-medium.text-indigo-600(class="hover:text-indigo-500" href="/signup") create a new account
+            a.font-medium.text-indigo-600(class="hover:text-indigo-500 dark:text-gray-100 dark:hover:text-white" href="/signup") create a new account
         form.mt-8.space-y-6(method="POST")
           input(type="hidden" name="remember" value="true")
           .-space-y-px.rounded-md.shadow-sm
