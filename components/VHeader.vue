@@ -22,7 +22,6 @@
             .hidden(class="sm:ml-6 sm:block")
               .flex.space-x-4
                 a.text-white.px-3.py-2.rounded-md.text-sm.font-medium(:class="[routeName == 'index' ? 'bg-green-900': 'text-gray-300']" href="/" aria-current="page") Home
-                a.text-white.px-3.py-2.rounded-md.text-sm.font-medium(:class="[routeName == 'models' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Models
           .absolute.inset-y-0.right-0.flex.items-center.pr-2(class="sm:static sm:inset-auto sm:ml-6 sm:pr-0" v-if="isLogged")
             a.leading-6.text-white.px-3.py-2.rounded-md.text-sm.font-medium(:class="['hidden sm:flex', routeName == 'create-model' ? 'bg-green-900': 'text-gray-300']" href="/create" aria-current="page")
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -69,7 +68,6 @@
       #mobile-menu(class="sm:hidden" v-if="boxInfo")
         .space-y-1.px-2.pt-2.pb-3
           a.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(:class="[routeName == 'index' ? 'bg-green-900': 'text-gray-300']" href="/" aria-current="page") Home
-          a.text-white.block.px-3.py-2.rounded-md.text-base.font-medium(:class="[routeName == 'models' ? 'bg-green-900': 'text-gray-300']" href="#" aria-current="page") Models
 
     header.bg-white.shadow(v-if="pageName")
       .mx-auto.max-w-7xl.py-6.px-4(class="sm:px-6 lg:px-8")
