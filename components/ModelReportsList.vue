@@ -46,22 +46,22 @@
             | {{ warning.created|moment("DD/MM/YYYY HH:mm") }}
           p {{ warning.note }}
         .py-3.pl-3.pr-4(v-else)
-          h3.flex.leading-6.mb-2.float-right
+          h3.flex.leading-6.mt-1.float-right(class="sm:mb-2 sm:mt-0")
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             | {{ warning.created|moment("DD/MM/YYYY HH:mm") }}
-          .flex
-            .mr-3(style="flex-shrink: 0;")
+          .block(class="sm:flex")
+            .mr-3.float-left(style="flex-shrink: 0;" class="sm:float-none")
               user-avatar(:data="warning.user")
-            p.leading-8
+            p.leading-8.ml-2(class="sm:ml-0")
               a.text-green-800(class="hover:text-green-700" :href="'/user/'+warning.user.id")
                 | @
                 span.underline {{ warning.user.username }}
-            p.leading-8.ml-5 {{ warning.note }}
-            .pr-3
+            p.leading-8.ml-0(class="sm:ml-5") {{ warning.note }}
+            .pr-0.flow-root(class="sm:block sm:pr-3")
               button(
-                class="ml-5 cursor-pointer rounded-md border border-green-600 flex bg-green-600 py-2 px-3 text-xs font-medium leading-4 text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                class="float-right sm:float-none ml-5 cursor-pointer rounded-md border border-green-600 flex bg-green-600 py-2 px-3 text-xs font-medium leading-4 text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                 v-if="!warning.resolved_by"
                 @click="boxToResolve = warning.id"
               )
@@ -76,14 +76,14 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             | {{ warning.updated|moment("DD/MM/YYYY HH:mm") }}
-          .flex
-            .mr-3(style="flex-shrink: 0;")
+          .block(class="sm:flex")
+            .mr-3.float-left(style="flex-shrink: 0;" class="sm:float-none")
               user-avatar(:data="warning.resolved")
-            p.leading-8
+            p.leading-8.ml-2(class="sm:ml-0")
               a.text-green-800(class="hover:text-green-700" :href="'/user/'+warning.user.id")
                 | @
                 span.underline {{ warning.resolved.username }}
-            p.leading-8.ml-5 {{ warning.admin_note }}
+            p.leading-8.ml-0(class="sm:ml-5") {{ warning.admin_note }}
 </template>
 
 <script>
