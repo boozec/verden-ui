@@ -23,8 +23,18 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
+  env: {
+    sentry_dsn: process.env.SENTRY_DSN,
+    sentry_rate: process.env.SENTRY_RATE,
+    sentry_env: process.env.SENTRY_ENV,
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ["~plugins/vue-toastification.js", "~plugins/vue-moment.js"],
+  plugins: [
+    "~plugins/vue-toastification.js",
+    "~plugins/vue-moment.js",
+    "~plugins/sentry.js",
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
