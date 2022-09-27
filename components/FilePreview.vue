@@ -42,10 +42,10 @@ export default {
   },
   created() {
     this.baseAPI = this.$config.api;
-    if (this.$colorMode.preference == "light") {
-      this.color = this.bg;
-    } else {
+    if (this.$colorMode.preference == "dark") {
       this.color = "#ecfdf5";
+    } else {
+      this.color = this.bg;
     }
   },
   methods: {
