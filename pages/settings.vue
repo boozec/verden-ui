@@ -62,9 +62,9 @@
               select(
                 class="cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               )
-                option(@click="$colorMode.preference = 'system'") System
-                option(@click="$colorMode.preference = 'light'") Light
-                option(@click="$colorMode.preference = 'dark'") Dark
+                option(@click="$colorMode.preference = 'system'" :selected="$colorMode.preference == 'system'") System
+                option(@click="$colorMode.preference = 'light'" :selected="$colorMode.preference == 'light'") Light
+                option(@click="$colorMode.preference = 'dark'" :selected="$colorMode.preference == 'dark'") Dark
 
 
         .py-3.px-4.text-right(class="sm:px-6")
