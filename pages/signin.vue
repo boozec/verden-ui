@@ -50,7 +50,11 @@ export default {
       event.preventDefault();
 
       const f = this.form;
-      if (!(f.username && f.password)) return;
+      if (!(f.username && f.password)) {
+        this.$toast.error("Every field is required");
+        return;
+      }
+
       this.$store.dispatch("auth/login", f).then((response) => {
         if (response.status != 200) {
           this.$toast.error(response.data.error);
