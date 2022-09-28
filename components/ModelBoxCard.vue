@@ -1,6 +1,6 @@
 <template lang="pug">
   .model.shadow-sm.rounded-lg.bg-white.p-4.w-full.h-80.duration-300(
-    class="hover:ease-out hover:shadow-md dark:bg-gray-600 dark:text-white"
+    class="hover:ease-out hover:shadow-md dark:bg-gray-800 dark:text-white"
   )
     a(:href="'/models/'+model.id")
       .image.bg-gray-900.rounded-xl.w-full.h-48.overflow-hidden

@@ -46,25 +46,25 @@
                 @click="boxDeleteModelUpload = 0"
               ) Cancel
     .shadow(class="sm:overflow-hidden sm:rounded-md")
-      .grid.grid-cols-2(v-if="form.id" class="dark:bg-gray-600")
+      .grid.grid-cols-2(v-if="form.id" class="dark:bg-gray-800")
         button.p-2.duration-100(
           type="button"
-          :class="{'dark:hover:bg-gray-300 hover:bg-white': true, 'bg-white dark:bg-gray-300 border-green-600 border-b-2': tab == 'info'}"
+          :class="{'dark:hover:bg-gray-300 hover:bg-white dark:text-white': true, 'bg-white dark:bg-green-500 border-green-600 border-b-2': tab == 'info'}"
           @click="tab = 'info'"
         ) Info
         button.p-2.duration-100(
           type="button"
-          :class="{'dark:hover:bg-gray-300 hover:bg-white': true, 'bg-white dark:bg-gray-300 border-green-600 border-b-2': tab == 'files'}"
+          :class="{'dark:hover:bg-gray-300 hover:bg-white dark:text-white': true, 'bg-white dark:bg-green-500 border-green-600 border-b-2': tab == 'files'}"
           @click="tab = 'files'"
         ) Files
       div(v-if="tab == 'info'")
-        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-600")
+        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-800")
           div
             label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="name") Name
             .mt-1
               input#name.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="name"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 placeholder="My super project"
                 required
                 v-model="form.name"
@@ -75,7 +75,7 @@
             .mt-1
               textarea#description.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="description" rows="3"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 placeholder="Now this is the story all about how, My life got flipped-turned upside down... "
                 v-model="form.description"
               )
@@ -86,7 +86,7 @@
                 name="duration"
                 type="number"
                 step="0.01"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 required
                 v-model="form.duration"
               )
@@ -98,7 +98,7 @@
                 name="height"
                 type="number"
                 step="0.01"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 required
                 v-model="form.height"
               )
@@ -110,7 +110,7 @@
                 name="weight"
                 type="number"
                 step="0.01"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 required
                 v-model="form.weight"
               )
@@ -121,7 +121,7 @@
             .mt-1
               input#printer.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="printer"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 placeholder="Formlabs Form 3BL"
                 v-model="form.printer"
               )
@@ -131,7 +131,7 @@
             .mt-1
               input#material.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="material"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 placeholder="PLA"
                 v-model="form.material"
               )
@@ -148,11 +148,11 @@
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
             | Save
-          p.text-sm.text-gray-700.mt-2(v-if="!form.id") You will add assets like images and STL/OBJ later.
+          p.text-sm.text-gray-700.mt-2(v-if="!form.id" class="dark:text-white") You will add assets like images and STL/OBJ later.
       div(v-else)
-        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-600 dark:text-white")
+        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-800 dark:text-white")
           h3(v-if="form.uploads") Manage '{{ form.name }}' already uploaded files
-          ul.divide-y.divide-gray-200.rounded-b-md.border.border-gray-200(role="list" v-if="form.uploads")
+          ul.divide-y.divide-gray-200.rounded-md.border.border-gray-200(class="dark:border-gray-500 dark:divide-gray-500" role="list" v-if="form.uploads")
             li.flex.items-center.justify-between.py-3.pl-3.pr-4.text-sm(v-for="upload in form.uploads" :key="upload.id")
               .flex.w-0.flex-1.items-center
                 svg.h-5.w-5.flex-shrink-0.text-gray-400(xmlns="http://www.w3.org/2000/svg", viewbox="0 0 20 20", fill="currentColor", aria-hidden="true")

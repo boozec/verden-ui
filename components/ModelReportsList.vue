@@ -1,5 +1,5 @@
 <template lang="pug">
-  .shadow-sm.rounded-lg.bg-white.p-4.w-full.mb-5(class="dark:bg-gray-600" v-if="warnings.length")
+  .shadow-sm.rounded-lg.bg-white.p-4.w-full.mb-5(class="dark:bg-gray-800" v-if="warnings.length")
     .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxToResolve > 0")
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-10.overflow-y-auto
@@ -44,7 +44,7 @@
           path(stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" v-else)
 
     ul(role="list" v-if="me && expandList")
-      li.text-sm.rounded-md.border.border-gray-200.mt-3(class="dark:bg-gray-50" v-for="warning in warnings" :key="warning.id")
+      li.text-sm.rounded-md.border.border-gray-200.mt-3(class="dark:bg-gray-600 dark:text-white dark:border-gray-400" v-for="warning in warnings" :key="warning.id")
         .py-3.pl-3.pr-4(v-if="!me.is_staff")
           h3.flex.leading-6.mb-2.float-right
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-6 h-6">
@@ -62,7 +62,7 @@
             .mr-3.float-left(style="flex-shrink: 0;" class="sm:float-none")
               user-avatar(:data="warning.user")
             p.leading-8.ml-2(class="sm:ml-0")
-              a.text-green-800(class="hover:text-green-700" :href="'/user/'+warning.user.id")
+              a.text-green-800(class="hover:text-green-700 dark:text-green-200 dark:hover:text-green-100" :href="'/user/'+warning.user.id")
                 | @
                 span.underline {{ warning.user.username }}
             p.leading-8.ml-0(class="sm:ml-5") {{ warning.note }}
@@ -76,7 +76,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                 </svg>
                 | Resolve
-        .bg-green-50.py-3.pl-3.pr-4(v-if="warning.resolved_by")
+        .bg-green-50.py-3.pl-3.pr-4(class="dark:bg-gray-500" v-if="warning.resolved_by")
           em Resolved by:
           h3.flex.leading-6.mb-2.float-right
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-6 h-6">
@@ -87,7 +87,7 @@
             .mr-3.float-left(style="flex-shrink: 0;" class="sm:float-none")
               user-avatar(:data="warning.resolved")
             p.leading-8.ml-2(class="sm:ml-0")
-              a.text-green-800(class="hover:text-green-700" :href="'/user/'+warning.user.id")
+              a.text-green-800(class="hover:text-green-700 dark:text-green-200 dark:hover:text-green-100" :href="'/user/'+warning.user.id")
                 | @
                 span.underline {{ warning.resolved.username }}
             p.leading-8.ml-0(class="sm:ml-5") {{ warning.admin_note }}

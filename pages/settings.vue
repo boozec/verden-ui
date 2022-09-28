@@ -5,7 +5,7 @@
 
     form.mt-3(v-if="me")
       .overflow-hidden.shadow(class="sm:rounded-md")
-        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-600")
+        .space-y-6.bg-white.px-4.py-5(class="sm:p-6 dark:bg-gray-800")
           div
             label.block.text-sm.font-medium.text-gray-700(class="dark:text-white") Avatar
             span.text-green-500.text-xs(v-if="avatarChanged") Avatar changed. Reload this page and/or clear your browser cache.
@@ -32,7 +32,7 @@
             .mt-1
               input#name.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="name"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 placeholder="John Doe"
                 v-model="form.name"
               )
@@ -41,7 +41,7 @@
             .mt-1
               input#email.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 name="username"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 placeholder="john"
                 v-model="form.username"
               )
@@ -51,7 +51,7 @@
               input#email.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
                 type="email"
                 name="email"
-                class="focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 placeholder="john@example.com"
                 v-model="form.email"
               )
@@ -60,7 +60,7 @@
             label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="theme") Theme
             .mt-1
               select(
-                class="cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                class="cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 v-model="$colorMode.preference"
               )
                 option(value="system" :selected="$colorMode.preference == 'system'") System
