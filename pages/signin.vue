@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     save(event) {
+      const ref = this.$route.query["ref"];
       event.preventDefault();
 
       const f = this.form;
@@ -61,7 +62,11 @@ export default {
         } else {
           this.$toast.success("Logged successfully");
           setTimeout(() => {
-            window.location.href = "/";
+            if (ref) {
+              window.location.href = ref;
+            } else {
+              window.location.href = "/";
+            }
           }, 1000);
         }
       });
