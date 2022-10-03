@@ -59,6 +59,7 @@ export default {
   },
 
   colorMode: {
+    preference: "light",
     fallback: "light",
   },
 };
