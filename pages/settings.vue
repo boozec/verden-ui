@@ -63,7 +63,6 @@
                 class="cursor-pointer rounded-md border border-gray-300 bg-white py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
                 v-model="$colorMode.preference"
               )
-                option(value="system" :selected="$colorMode.preference == 'system'") System
                 option(value="light" :selected="$colorMode.preference == 'light'") Light
                 option(value="dark" :selected="$colorMode.preference == 'dark'") Dark
 
