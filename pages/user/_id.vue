@@ -19,6 +19,7 @@
             :key="model.id"
             :model="model"
           )
+        pagination(:page="page" :pages="pages" v-if="count")
       h4.text-lg(v-else class="dark:text-white") No models found
 
 </template>
@@ -28,6 +29,7 @@ import UserAvatar from "@/components/UserAvatar.vue";
 import FilePreview from "@/components/FilePreview.vue";
 import ModelLoading from "@/components/ModelLoading.vue";
 import ModelBoxCard from "@/components/ModelBoxCard.vue";
+import Pagination from "@/components/Pagination.vue";
 
 import { mapGetters } from "vuex";
 
@@ -39,6 +41,9 @@ export default {
       id: 0,
       user: {},
       models: [],
+      count: 0,
+      page: 0,
+      pages: 0,
     };
   },
   head() {
@@ -51,12 +56,14 @@ export default {
     "file-preview": FilePreview,
     "model-loading": ModelLoading,
     "model-box-card": ModelBoxCard,
+    pagination: Pagination,
   },
   computed: {
     ...mapGetters(["isLoading"]),
   },
   created() {
     this.id = this.$route.params.id;
+    this.page = this.$route.query.page ?? 0;
 
     this.$store.dispatch("users/findById", this.id).then((response) => {
       if (response.status != 200) {
@@ -66,9 +73,15 @@ export default {
       }
     });
 
-    this.$store.dispatch("users/findModels", this.id).then((response) => {
-      if (response.status == 200) this.models = response.data.results;
-    });
+    this.$store
+      .dispatch("users/findModels", { id: this.id, page: this.page })
+      .then((response) => {
+        if (response.status == 200) {
+          this.models = response.data.results;
+          this.count = response.data.count;
+          this.pages = Math.ceil(this.count / 20);
+        }
+      });
   },
 };
 </script>

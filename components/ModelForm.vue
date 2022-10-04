@@ -248,6 +248,8 @@ export default {
             this.$toast.error(response.data.error);
           }
         });
+      } else {
+        this.$toast.error("Fill all the required fields");
       }
       event.preventDefault();
     },

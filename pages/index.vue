@@ -19,11 +19,13 @@
           :key="model.id"
           :model="model"
         )
+      pagination(:page="page" :pages="pages" v-if="count")
 </template>
 
 <script>
 import ModelLoading from "@/components/ModelLoading.vue";
 import ModelBoxCard from "@/components/ModelBoxCard.vue";
+import Pagination from "@/components/Pagination.vue";
 
 import { mapGetters } from "vuex";
 
@@ -36,14 +38,24 @@ export default {
   components: {
     "model-loading": ModelLoading,
     "model-box-card": ModelBoxCard,
+    pagination: Pagination,
+  },
+  data() {
+    return {
+      page: 0,
+      pages: 0,
+    };
   },
   computed: {
     ...mapGetters(["isLoading"]),
     ...mapGetters("auth", ["isLogged"]),
-    ...mapGetters("models", ["models"]),
+    ...mapGetters("models", ["models", "count"]),
   },
   created() {
-    this.$store.dispatch("models/getModels");
+    this.page = this.$route.query.page ?? 0;
+    this.$store.dispatch("models/getModels", this.page).then(() => {
+      this.pages = Math.ceil(this.count / 20);
+    });
   },
 };
 </script>

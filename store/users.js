@@ -39,12 +39,14 @@ export const actions = {
     return res;
   },
   // Search user models
-  async findModels({ commit }, id) {
+  async findModels({ commit }, data) {
     commit("loadingStatus", true, { root: true });
     let res = { status: 0, data: null };
     let api = this.$config.api;
+    const id = data.id;
+    const page = data.page ? data.page : 0;
 
-    await fetch(`${api}/v1/users/${id}/models`, {
+    await fetch(`${api}/v1/users/${id}/models?page=${page}`, {
       headers: {
         "Content-Type": "application/json",
       },
