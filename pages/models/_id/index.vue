@@ -1,12 +1,27 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6#modelpage(class="sm:px-6 lg:px-8 md:max-w-7xl")
+    .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="modalLoginError")
+      .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
+      .fixed.inset-0.z-10.overflow-y-auto
+        .flex.min-h-full.items-end.justify-center.p-4.text-center(class="sm:items-center sm:p-0")
+          .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(class="sm:my-8 sm:w-full sm:max-w-lg")
+            .bg-white.px-4.pt-5.pb-4(class="sm:p-6 sm:pb-4")
+              div
+                h2 You must <a class="underline" :href="'/signin?ref=/models/'+model.id">log in</a> first.
+            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
+              button.mt-3.inline-flex.w-full.justify-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-base.font-medium.text-gray-700.shadow-sm(
+                type="button"
+                class="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="modalLoginError = false"
+              ) Cancel
+
     .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxReport")
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-10.overflow-y-auto
         .flex.min-h-full.items-end.justify-center.p-4.text-center(class="sm:items-center sm:p-0")
           .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(class="sm:my-8 sm:w-full sm:max-w-lg")
             .bg-white.px-4.pt-5.pb-4(class="sm:p-6 sm:pb-4")
-              div(v-if="isLogged")
+              div
                 label.block.text-sm.font-medium.text-gray-700(for="warning_note") Note 
                 .mt-1
                   textarea#description.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
@@ -16,8 +31,6 @@
                     v-model="report.warning_note"
                     required
                   )
-              div(v-else)
-                h2 You must <a class="underline" :href="'/signin?ref=/models/'+model.id">log in</a> first.
             .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
               button.inline-flex.w-full.justify-center.rounded-md.border.border-transparent.bg-green-600.px-4.py-2.text-base.font-medium.text-white.shadow-sm(
                 type="button"
@@ -103,7 +116,7 @@
         | {{ model.likes ? model.likes.length : 0 }}
       button.inline-flex.leading-6.justify-center.rounded-md.border.border-transparent.bg-yellow-600.py-2.px-4.mr-2.text-sm.font-medium.text-white.shadow-sm(
         class="hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
-        @click="boxReport = true"
+        @click="openBoxReport()"
       )
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
@@ -219,6 +232,7 @@ export default {
       boxFilesToDownload: false,
       boxDeleteModel: false,
       boxReport: false,
+      modalLoginError: false,
       report: {},
     };
   },
@@ -252,6 +266,10 @@ export default {
     });
   },
   methods: {
+    openBoxReport() {
+      if (this.isLogged) this.boxReport = true;
+      else this.modalLoginError = true;
+    },
     getFileName(path) {
       return path.split("/").at(-1);
     },
@@ -305,6 +323,10 @@ export default {
       return this.model.likes.filter((x) => x.user_id == this.me.id).length > 0;
     },
     toggleLike() {
+      if (!this.isLogged) {
+        this.modalLoginError = true;
+        return;
+      }
       if (this.likedByUser()) {
         this.$store
           .dispatch("models/removeLike", this.model.id)
