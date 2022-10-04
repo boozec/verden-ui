@@ -49,6 +49,36 @@ export const actions = {
 
     return res;
   },
+  // Filter models
+  async filter({ commit }, data) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    const page = data.page ? data.page : 0;
+
+    await fetch(`${api}/v1/models/filter?page=${page}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ q: data.q }),
+    })
+      .then(async (response) => {
+        res.data = await response.json();
+        res.status = response.status;
+        if (res.status == 200) {
+          commit("saveModels", res.data);
+        }
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+
+    return res;
+  },
   // Find a model by its id
   async findModel({ commit }, id) {
     commit("loadingStatus", true, { root: true });

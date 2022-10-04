@@ -92,6 +92,9 @@ export default {
     ...mapGetters(["isLoading"]),
     ...mapGetters("auth", ["isLogged", "me"]),
   },
+  head: {
+    title: "Settings · Verden",
+  },
   data() {
     return {
       form: {},

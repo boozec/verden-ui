@@ -1,12 +1,14 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6(class="sm:px-6 lg:px-8 md:max-w-7xl")
+    h1.text-3xl.font-bold(class="dark:text-white") Results for: {{ q }}
     model-loading(v-if="isLoading")
     section(v-else)
-      form.mb-5.flex(action="/search")
+      form.my-5.flex(action="/search")
         input.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1.mr-2(
           name="q"
           class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
           placeholder="Type some text to find the best models..."
+          :value="q"
         )
         button.inline-flex.justify-center.rounded-md.border.border-transparent.bg-green-600.py-2.px-4.text-sm.font-medium.text-white.shadow-sm(
           type="submit"
@@ -28,10 +30,17 @@ import ModelBoxCard from "@/components/ModelBoxCard.vue";
 import { mapGetters } from "vuex";
 
 export default {
-  name: "IndexPage",
+  name: "SearchPage",
   layout: "default",
-  head: {
-    title: "Verden - Social for 3D artists",
+  head() {
+    return {
+      title: this.q + " · Verden",
+    };
+  },
+  data() {
+    return {
+      q: "",
+    };
   },
   components: {
     "model-loading": ModelLoading,
@@ -43,7 +52,8 @@ export default {
     ...mapGetters("models", ["models"]),
   },
   created() {
-    this.$store.dispatch("models/getModels");
+    this.q = this.$route.query["q"];
+    this.$store.dispatch("models/filter", { q: this.q });
   },
 };
 </script>
