@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  head: { title: "Error · Verden" },
   methods: {
     goback() {
       window.history.back();
