@@ -1,6 +1,6 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6(class="sm:px-6 lg:px-8 md:max-w-7xl")
-    h1.text-3xl.font-bold(class="dark:text-white") Models
+    h1.text-3xl.font-bold(class="dark:text-white") Reports
     .grid.grid-cols-6.mt-3
       div
         admin-sidebar
