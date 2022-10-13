@@ -15,7 +15,7 @@
                 class="hover:bg-gray-100" v-for="field in fields"
               )
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-900.truncate(v-for="name in keys")
-                  div.max-w-100.block.truncate
+                  div.block.truncate(:class="{'max-w-100': !['id', 'created', 'updated'].includes(name)}")
                     span(v-if="isBool(field[name])")
                       svg(v-if="field[name]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-500")
                         path(stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5")
@@ -23,9 +23,22 @@
                         path(stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12")
                     span(v-else-if="name == 'avatar'")
                       user-avatar(:data="field")
+                    span(v-else-if="['author', 'user', 'resolved'].includes(name)")
+                      user-avatar(:data="field[name]" v-if="field[name].username")
+                    span(v-else-if="name == 'created' || name == 'updated'")
+                      | {{ field[name]|moment("DD/MM/YYYY HH:mm") }}
+                    span(v-else-if="name == 'likes'")
+                      | {{ field.likes ? field.likes.length : 0 }}
+                    span(v-else-if="name == 'model_id'")
+                      a.underline.text-green-500(:href="'/models/'+field.model_id" target="_blank")
+                        | {{ field[name] }}
                     span(v-else :title="field[name]") {{ field[name] }}
                 td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-900
                   .flex
+                    .mr-1(v-if="path")
+                      a(:href="path + field.id" target="_blank")
+                        svg(xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6")
+                          path(stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244")
                     .mr-1
                       svg(xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 cursor-pointer")
                         path(stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125")
@@ -39,7 +52,7 @@
 import UserAvatar from "@/components/UserAvatar.vue";
 
 export default {
-  props: ["keys", "fields"],
+  props: ["keys", "fields", "path"],
   components: {
     "user-avatar": UserAvatar,
   },
