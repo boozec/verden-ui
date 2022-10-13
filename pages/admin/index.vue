@@ -10,12 +10,14 @@
           :fields="users"
           path="/users/"
         )
+        pagination(:page="page" :pages="pages" v-if="count" path="/admin")
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
 import AdminSidebar from "@/components/AdminSidebar.vue";
+import Pagination from "@/components/Pagination.vue";
 import VTable from "@/components/VTable.vue";
 
 export default {
@@ -23,9 +25,19 @@ export default {
   head: { title: "Admin panel · Verden" },
   computed: {
     ...mapGetters("auth", ["isLogged", "me"]),
-    ...mapGetters("users", ["users"]),
+    ...mapGetters("users", ["users", "count"]),
   },
-  components: { AdminSidebar, "v-table": VTable },
+  data() {
+    return {
+      page: 0,
+      pages: 0,
+    };
+  },
+  components: {
+    AdminSidebar,
+    pagination: Pagination,
+    "v-table": VTable,
+  },
   async mounted() {
     await this.$store.dispatch("auth/findMe");
 
@@ -33,7 +45,10 @@ export default {
       window.location.href = "/";
     }
 
-    this.$store.dispatch("users/getUsers", { page: 0 });
+    this.page = this.$route.query.page ?? 0;
+    this.$store.dispatch("users/getUsers", this.page).then(() => {
+      this.pages = Math.ceil(this.count / 20);
+    });
   },
 };
 </script>

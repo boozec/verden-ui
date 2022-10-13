@@ -1,5 +1,6 @@
 export const state = () => ({
   warnings: [],
+  count: 0,
 });
 
 export const getters = {

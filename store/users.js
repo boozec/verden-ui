@@ -1,16 +1,21 @@
 export const state = () => ({
   users: [],
+  count: 0,
 });
 
 export const getters = {
   users: (state) => {
     return state.users;
   },
+  count: (state) => {
+    return state.count;
+  },
 };
 
 export const mutations = {
   saveUsers: (state, value) => {
-    state.users = value;
+    state.users = value.results;
+    state.count = value.count;
   },
 };
 
@@ -144,11 +149,10 @@ export const actions = {
     return res;
   },
   // Get users
-  async getUsers({ commit, rootGetters }, data) {
+  async getUsers({ commit, rootGetters }, page) {
     commit("loadingStatus", true, { root: true });
     let res = { status: 0, data: null };
     let api = this.$config.api;
-    const page = data.page ? data.page : 0;
 
     await fetch(`${api}/v1/users?page=${page}`, {
       headers: {
@@ -159,7 +163,7 @@ export const actions = {
       .then(async (response) => {
         res.status = response.status;
         res.data = await response.json();
-        commit("saveUsers", res.data.results);
+        commit("saveUsers", res.data);
       })
       .catch((e) => {
         res.status = e.status;

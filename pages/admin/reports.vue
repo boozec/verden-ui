@@ -9,12 +9,14 @@
           :keys="['id', 'model_id', 'created', 'updated', 'user', 'resolved', 'note', 'admin_note']"
           :fields="warnings"
         )
+        pagination(:page="page" :pages="pages" v-if="count" path="/admin/reports")
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 
 import AdminSidebar from "@/components/AdminSidebar.vue";
+import Pagination from "@/components/Pagination.vue";
 import VTable from "@/components/VTable.vue";
 
 export default {
@@ -22,9 +24,19 @@ export default {
   head: { title: "Models · Verden" },
   computed: {
     ...mapGetters("auth", ["isLogged", "me"]),
-    ...mapGetters("warnings", ["warnings"]),
+    ...mapGetters("warnings", ["warnings", "count"]),
   },
-  components: { AdminSidebar, "v-table": VTable },
+  data() {
+    return {
+      page: 0,
+      pages: 0,
+    };
+  },
+  components: {
+    AdminSidebar,
+    pagination: Pagination,
+    "v-table": VTable,
+  },
   async mounted() {
     await this.$store.dispatch("auth/findMe");
 
@@ -32,7 +44,10 @@ export default {
       window.location.href = "/";
     }
 
-    this.$store.dispatch("warnings/getWarnings", 0);
+    this.page = this.$route.query.page ?? 0;
+    this.$store.dispatch("warnings/getWarnings", this.page).then(() => {
+      this.pages = Math.ceil(this.count / 20);
+    });
   },
 };
 </script>
