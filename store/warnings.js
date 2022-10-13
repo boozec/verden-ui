@@ -6,15 +6,44 @@ export const getters = {
   warnings: (state) => {
     return state.warnings;
   },
+  count: (state) => {
+    return state.count;
+  },
 };
 
 export const mutations = {
   saveWarnings: (state, value) => {
-    state.warnings = value;
+    state.warnings = value.results;
+    state.count = value.count;
   },
 };
 
 export const actions = {
+  // Get warnings
+  async getWarnings({ commit, rootGetters }, page) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    await fetch(`${api}/v1/warnings?page=${page}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+    })
+      .then(async (response) => {
+        res.status = response.status;
+        const data = await response.json();
+        if (res.status == 200) {
+          commit("saveWarnings", data);
+        }
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+  },
   // Filter warnings
   async filterWarnings({ commit, rootGetters }, payload) {
     commit("loadingStatus", true, { root: true });
@@ -33,7 +62,7 @@ export const actions = {
         res.status = response.status;
         const data = await response.json();
         if (res.status == 200) {
-          commit("saveWarnings", data.results);
+          commit("saveWarnings", { results: data.results });
         }
       })
       .catch((e) => {

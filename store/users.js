@@ -143,4 +143,28 @@ export const actions = {
 
     return res;
   },
+  // Get users
+  async getUsers({ commit, rootGetters }, data) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+    const page = data.page ? data.page : 0;
+
+    await fetch(`${api}/v1/users?page=${page}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+    })
+      .then(async (response) => {
+        res.status = response.status;
+        res.data = await response.json();
+        commit("saveUsers", res.data.results);
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+  },
 };
