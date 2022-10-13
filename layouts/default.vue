@@ -1,5 +1,11 @@
 <template>
-  <div :class="$colorMode.preference == 'light' ? 'light' : 'dark'">
+  <div
+    :class="
+      $colorMode.preference == 'light' || $colorMode.preference == 'system'
+        ? 'light'
+        : 'dark'
+    "
+  >
     <VHeader />
     <main>
       <Nuxt />
