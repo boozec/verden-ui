@@ -21,7 +21,7 @@ import VTable from "@/components/VTable.vue";
 
 export default {
   name: "AdminView",
-  head: { title: "Models · Verden" },
+  head: { title: "Reports · Verden" },
   computed: {
     ...mapGetters("auth", ["isLogged", "me"]),
     ...mapGetters("warnings", ["warnings", "count"]),
