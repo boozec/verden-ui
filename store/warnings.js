@@ -50,8 +50,10 @@ export const actions = {
     commit("loadingStatus", true, { root: true });
     let res = { status: 0, data: null };
     let api = this.$config.api;
+    const page = payload.page ?? 0;
+    delete payload.page;
 
-    await fetch(`${api}/v1/warnings/filter`, {
+    await fetch(`${api}/v1/warnings/filter?page=${page}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +65,7 @@ export const actions = {
         res.status = response.status;
         const data = await response.json();
         if (res.status == 200) {
-          commit("saveWarnings", { results: data.results });
+          commit("saveWarnings", data);
         }
       })
       .catch((e) => {
