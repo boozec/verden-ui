@@ -1,7 +1,7 @@
 <template lang="pug">
   .flex.flex-col
     .overflow-x-auto
-      .py-2.inline-block.min-w-full(class="sm:px-6 lg:px-8")
+      .py-2.inline-block.min-w-full
         .overflow-hidden
           table.min-w-full
             thead.bg-white.border-b
