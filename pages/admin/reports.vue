@@ -5,6 +5,16 @@
       div
         admin-sidebar
       section#tables.col-span-5
+        input#notResolved.form-check-input.h-4.w-4.border.border-gray-300.rounded-sm.bg-white.transition.duration-200.mt-1.align-top.bg-no-repeat.bg-center.bg-contain.float-left.mr-2.cursor-pointer(
+          class="checked:bg-blue-600 checked:border-blue-600 focus:outline-none"
+          type="checkbox"
+          name="notResolved"
+          v-model="notResolved"
+          @change="filter"
+        )
+        label.form-check-label.inline-block.text-gray-800(for="notResolved")
+          | Show only not resolved reports
+
         v-table(
           :keys="['id', 'model_id', 'created', 'updated', 'user', 'resolved', 'note', 'admin_note']"
           :fields="warnings"
@@ -30,12 +40,23 @@ export default {
     return {
       page: 0,
       pages: 0,
+      notResolved: false,
     };
   },
   components: {
     AdminSidebar,
     pagination: Pagination,
     "v-table": VTable,
+  },
+  methods: {
+    filter() {
+      if (this.notResolved) {
+        window.location.href =
+          "/admin/reports?page=" + this.page + "&not_resolved";
+      } else {
+        window.location.href = "/admin/reports?page=" + this.page;
+      }
+    },
   },
   async mounted() {
     await this.$store.dispatch("auth/findMe");
@@ -45,9 +66,20 @@ export default {
     }
 
     this.page = this.$route.query.page ?? 0;
-    this.$store.dispatch("warnings/getWarnings", this.page).then(() => {
-      this.pages = Math.ceil(this.count / 20);
-    });
+    this.notResolved = Object.keys(this.$route.query).includes("not_resolved");
+
+    // FIX: pagination for filtered warnings
+    if (this.notResolved) {
+      this.$store
+        .dispatch("warnings/filterWarnings", { page: this.page })
+        .then(() => {
+          this.pages = Math.ceil(this.count / 20);
+        });
+    } else {
+      this.$store.dispatch("warnings/getWarnings", this.page).then(() => {
+        this.pages = Math.ceil(this.count / 20);
+      });
+    }
   },
 };
 </script>
