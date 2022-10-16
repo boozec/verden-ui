@@ -126,4 +126,29 @@ export const actions = {
 
     return res;
   },
+  // Delete a warning
+  async deleteWarning({ commit, rootGetters }, id) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    await fetch(`${api}/v1/warnings/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+    })
+      .then(async (response) => {
+        res.status = response.status;
+        res.data = await response.text();
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+
+    return res;
+  },
 };
