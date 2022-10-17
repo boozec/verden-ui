@@ -45,6 +45,30 @@ export const actions = {
 
     commit("loadingStatus", false, { root: true });
   },
+  // Find a warning by its id
+  async findWarning({ commit, rootGetters }, id) {
+    commit("loadingStatus", true, { root: true });
+    let res = { status: 0, data: null };
+    let api = this.$config.api;
+
+    await fetch(`${api}/v1/warnings/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
+      },
+    })
+      .then(async (response) => {
+        res.data = await response.json();
+        res.status = response.status;
+      })
+      .catch((e) => {
+        res.status = e.status;
+      });
+
+    commit("loadingStatus", false, { root: true });
+
+    return res;
+  },
   // Filter warnings
   async filterWarnings({ commit, rootGetters }, payload) {
     commit("loadingStatus", true, { root: true });

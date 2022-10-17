@@ -1,6 +1,65 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6(class="sm:px-6 lg:px-8 md:max-w-7xl")
     h1.text-3xl.font-bold(class="dark:text-white") Reports
+    .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxEditWarning > 0")
+      .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
+      .fixed.inset-0.z-10.overflow-y-auto
+        .flex.min-h-full.items-end.justify-center.p-4.text-center(class="sm:items-center sm:p-0")
+          .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(class="sm:my-8 sm:w-full sm:max-w-lg")
+            h3.text-xl.font-bold.text-center.p-5 Edit warning
+            form.m-3
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="model") Model
+                .mt-1
+                  input#model.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="model"
+                    class="focus:border-green-500 opacity-25 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.model_id"
+                    readonly
+                    disabled
+                  )
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="note") Note
+                .mt-1
+                  input#note.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="note"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.note"
+                  )
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="is_resolved") Is it resolved?
+                .mt-1.flow-root
+                  input#is_resolved.form-check-input.h-4.w-4.border.border-gray-300.rounded-sm.bg-white.transition.duration-200.mt-1.align-top.bg-no-repeat.bg-center.bg-contain.float-left.mr-2.cursor-pointer(
+                    class="checked:bg-blue-600 checked:border-blue-600 focus:outline-none"
+                    type="checkbox" name="is_resolved" v-model="form.resolved_by" :value="me.id"
+                  )
+              .mb-5(v-if="form.resolved_by || form.is_resolved")
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="admin_note") Admin note
+                .mt-1
+                  input#admin_note.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="admin_note"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.admin_note"
+                  )
+
+            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
+              button.inline-flex.w-full.justify-center.rounded-md.border.border-transparent.bg-green-600.px-4.py-2.text-base.font-medium.text-white.shadow-sm(
+                type="button"
+                :class="{'hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm': true, 'opacity-25 cursor-default': isLoading}"
+                :disabled="isLoading"
+                :readonly="isLoading"
+                @click="saveWarning"
+              )
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" v-if="isLoading">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                | Save
+              button.mt-3.inline-flex.w-full.justify-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-base.font-medium.text-gray-700.shadow-sm(
+                type="button"
+                class="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="boxEditWarning = 0"
+              ) Cancel
     .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxDeleteReport > 0")
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-10.overflow-y-auto
@@ -51,6 +110,7 @@
           :keys="['id', 'model_id', 'created', 'updated', 'user', 'resolved', 'note', 'admin_note']"
           :fields="warnings"
           :deleterow="openModal"
+          :editrow="openEditModal"
         )
         pagination(:page="page" :pages="pages" v-if="count" path="/admin/reports")
 </template>
@@ -76,22 +136,14 @@ export default {
       pages: 0,
       notResolved: false,
       boxDeleteReport: 0,
+      boxEditWarning: 0,
+      form: {},
     };
   },
   components: {
     AdminSidebar,
     pagination: Pagination,
     "v-table": VTable,
-  },
-  methods: {
-    filter() {
-      if (this.notResolved) {
-        window.location.href =
-          "/admin/reports?page=" + this.page + "&not_resolved";
-      } else {
-        window.location.href = "/admin/reports?page=" + this.page;
-      }
-    },
   },
   async mounted() {
     await this.$store.dispatch("auth/findMe");
@@ -117,6 +169,44 @@ export default {
     }
   },
   methods: {
+    openEditModal(id) {
+      this.$store.dispatch("warnings/findWarning", id).then((response) => {
+        this.boxEditWarning = id;
+        this.form = response.data;
+      });
+    },
+    filter() {
+      if (this.notResolved) {
+        window.location.href =
+          "/admin/reports?page=" + this.page + "&not_resolved";
+      } else {
+        window.location.href = "/admin/reports?page=" + this.page;
+      }
+    },
+    saveWarning() {
+      this.$store
+        .dispatch("warnings/editWarning", { ...this.form })
+        .then((response) => {
+          if (response.status == 200) {
+            this.$toast.success("Report saved");
+            if (this.notResolved) {
+              this.$store
+                .dispatch("warnings/filterWarnings", { page: this.page })
+                .then(() => {
+                  this.pages = Math.ceil(this.count / 20);
+                });
+            } else {
+              this.$store
+                .dispatch("warnings/getWarnings", this.page)
+                .then(() => {
+                  this.pages = Math.ceil(this.count / 20);
+                });
+            }
+          } else {
+            this.$toast.error(response.data);
+          }
+        });
+    },
     openModal(id) {
       this.boxDeleteReport = id;
     },
