@@ -133,6 +133,8 @@ export default {
             this.$store.dispatch("users/getUsers", this.page).then(() => {
               this.pages = Math.ceil(this.count / 20);
             });
+
+            this.boxEditUser = 0;
           } else {
             this.$toast.error(response.data.error);
           }

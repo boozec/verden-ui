@@ -218,6 +218,8 @@ export default {
             this.$store.dispatch("models/getModels", this.page).then(() => {
               this.pages = Math.ceil(this.count / 20);
             });
+
+            this.boxEditModel = 0;
           } else {
             this.$toast.error(response.data.error);
           }

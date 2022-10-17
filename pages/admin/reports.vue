@@ -202,6 +202,8 @@ export default {
                   this.pages = Math.ceil(this.count / 20);
                 });
             }
+
+            this.boxEditWarning = 0;
           } else {
             this.$toast.error(response.data);
           }
