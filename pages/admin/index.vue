@@ -8,7 +8,6 @@
         v-table(
           :keys="['id', 'avatar', 'username', 'email', 'is_staff', 'name']"
           :fields="users"
-          :deleterow="false"
           path="/users/"
         )
         pagination(:page="page" :pages="pages" v-if="count" path="/admin")

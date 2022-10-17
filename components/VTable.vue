@@ -64,7 +64,7 @@
 import UserAvatar from "@/components/UserAvatar.vue";
 
 export default {
-  props: ["keys", "fields", "path", "deleterow", "delete"],
+  props: ["keys", "fields", "path", "deleterow"],
   components: {
     "user-avatar": UserAvatar,
   },
@@ -76,7 +76,7 @@ export default {
       return typeof variable == "boolean";
     },
     handleDelete(id) {
-      this.delete(id);
+      this.deleterow(id);
     },
     deleteAvatar(id) {
       this.$store.dispatch("users/deleteAvatar", id).then((response) => {

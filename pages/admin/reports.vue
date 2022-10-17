@@ -50,8 +50,7 @@
         v-table(
           :keys="['id', 'model_id', 'created', 'updated', 'user', 'resolved', 'note', 'admin_note']"
           :fields="warnings"
-          :deleterow="true"
-          :delete="openModal"
+          :deleterow="openModal"
         )
         pagination(:page="page" :pages="pages" v-if="count" path="/admin/reports")
 </template>

@@ -42,8 +42,7 @@
           :keys="['id', 'name', 'created', 'author', 'likes']"
           :fields="models"
           path="/models/"
-          :deleterow="true"
-          :delete="openModal"
+          :deleterow="openModal"
         )
         pagination(:page="page" :pages="pages" v-if="count" path="/admin/models")
 </template>
