@@ -94,7 +94,7 @@
                 class="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                 @click="boxDeleteReport = 0"
               ) Cancel
-    .grid.grid-cols-6.mt-3
+    .flex.flex-col.grid-cols-6.mt-3(class="sm:grid")
       div
         admin-sidebar
       section#tables.col-span-5

@@ -24,7 +24,7 @@
                       svg(v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500")
                         path(stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12")
                     span(v-else-if="name == 'avatar'")
-                      .flex
+                      .block(class="sm:flex")
                         a.inline-block(:href="'/user/'+field.id" target="_blank")
                           user-avatar(:data="field")
                         a.text-red-500.ml-2.cursor-pointer(
