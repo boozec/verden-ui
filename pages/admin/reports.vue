@@ -184,6 +184,9 @@ export default {
       }
     },
     saveWarning() {
+      if (!this.form.resolved_by) this.form.resolved_by = 0;
+      else this.form.resolved_by = this.me.id;
+
       this.$store
         .dispatch("warnings/editWarning", { ...this.form })
         .then((response) => {
