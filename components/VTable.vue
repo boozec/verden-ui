@@ -22,10 +22,10 @@
                       svg(v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-red-500")
                         path(stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12")
                     span(v-else-if="name == 'avatar'")
-                      a(:href="'/user/'+field.id" target="_blank")
+                      a.inline-block(:href="'/user/'+field.id" target="_blank")
                         user-avatar(:data="field")
                     span(v-else-if="['author', 'user', 'resolved'].includes(name)")
-                      a(:href="'/user/'+field[name].id" target="_blank")
+                      a.inline-block(:href="'/user/'+field[name].id" target="_blank")
                         user-avatar(:data="field[name]" v-if="field[name].username")
                     span(v-else-if="name == 'created' || name == 'updated'")
                       | {{ field[name]|moment("DD/MM/YYYY HH:mm") }}
