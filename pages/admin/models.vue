@@ -1,6 +1,118 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6(class="sm:px-6 lg:px-8 md:max-w-7xl")
     h1.text-3xl.font-bold(class="dark:text-white") Models
+    .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="openPreview")
+      .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
+      .fixed.inset-0.z-10.overflow-y-auto
+        .flex.min-h-full.items-center.justify-center.p-4.text-center
+          .relative.transform.overflow-hidden.rounded-lg.bg-white.shadow-xl.transition-all(class="w-10/12 sm:w-8/12")
+            file-preview(:path="openPreview" controls="1")
+            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
+              button.mt-3.inline-flex.w-full.justify-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-base.font-medium.text-gray-700.shadow-sm(
+                type="button"
+                class="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="openPreview = null"
+              ) Close
+    .relative.z-9(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxEditModel > 0")
+      .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
+      .fixed.inset-0.z-9.overflow-y-auto
+        .flex.min-h-full.items-end.justify-center.p-4.text-center(class="sm:items-center sm:p-0")
+          .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(class="sm:my-8 sm:w-full sm:max-w-lg")
+            h3.text-xl.font-bold.text-center.p-5 Edit model
+            form.m-3
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="name") Name
+                .mt-1
+                  input#name.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="name"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    placeholder="John Doe"
+                    v-model="form.name"
+                  )
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="description") Description
+                  span.text-gray-300 (Optional)
+                .mt-1
+                  input#description.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="description"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.description"
+                  )
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="duration") Duration
+                .mt-1
+                  input#duration.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="duration"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.duration"
+                  )
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="height") Height
+                .mt-1
+                  input#height.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="height"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.height"
+                  )
+
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="weight") Weight
+                .mt-1
+                  input#weight.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="weight"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.weight"
+                  )
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="printer") Printer
+                  span.text-gray-300 (Optional)
+                .mt-1
+                  input#printer.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="printer"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.printer"
+                  )
+              .mb-5
+                label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="material") Material
+                  span.text-gray-300 (Optional)
+                .mt-1
+                  input#material.mt-1.block.w-full.rounded-md.border-gray-300.border-1.px-2.py-1(
+                    name="material"
+                    class="focus:border-green-500 focus:ring-green-500 sm:text-sm dark:bg-gray-600 dark:text-gray-50 dark:border-gray-700"
+                    v-model="form.material"
+                  )
+
+            hr
+            .my-4.mx-3
+              h4 See and/or remove files
+              ul.divide-y.divide-gray-200.rounded-md.border.border-gray-200(class="dark:border-gray-500 dark:divide-gray-500" role="list" v-if="form.uploads")
+                li.flex.items-center.justify-between.py-3.pl-3.pr-4.text-sm(v-for="upload in form.uploads" :key="upload.id")
+                  .flex.w-0.flex-1.items-center
+                    svg.h-5.w-5.flex-shrink-0.text-gray-400(xmlns="http://www.w3.org/2000/svg", viewbox="0 0 20 20", fill="currentColor", aria-hidden="true")
+                      path(fill-rule="evenodd", d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z", clip-rule="evenodd")
+                    span.ml-2.w-0.flex-1.truncate {{ getFileName(upload.filepath) }}
+                  .ml-4
+                    a.font-medium.text-black-700.cursor-pointer.mr-2(class="hover:underline" @click="openPreview = upload.filepath") Preview
+                    a.font-medium.text-red-700.cursor-pointer(class="hover:underline dark:text-red-500" @click="boxDeleteModelUpload = upload.id") Delete
+
+            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
+              button.inline-flex.w-full.justify-center.rounded-md.border.border-transparent.bg-green-600.px-4.py-2.text-base.font-medium.text-white.shadow-sm(
+                type="button"
+                :class="{'hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm': true, 'opacity-25 cursor-default': isLoading}"
+                :disabled="isLoading"
+                :readonly="isLoading"
+                @click="saveModel"
+              )
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" v-if="isLoading">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                | Save
+              button.mt-3.inline-flex.w-full.justify-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-base.font-medium.text-gray-700.shadow-sm(
+                type="button"
+                class="hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="boxEditModel = 0"
+              ) Cancel
     .relative.z-10(aria-labelledby="modal-title", role="dialog", aria-modal="true" v-if="boxDeleteModel > 0")
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-10.overflow-y-auto
@@ -43,6 +155,7 @@
           :fields="models"
           path="/models/"
           :deleterow="openModal"
+          :editrow="openEditModal"
         )
         pagination(:page="page" :pages="pages" v-if="count" path="/admin/models")
 </template>
@@ -51,6 +164,7 @@
 import { mapGetters } from "vuex";
 
 import AdminSidebar from "@/components/AdminSidebar.vue";
+import FilePreview from "@/components/FilePreview.vue";
 import Pagination from "@/components/Pagination.vue";
 import VTable from "@/components/VTable.vue";
 
@@ -67,10 +181,14 @@ export default {
       page: 0,
       pages: 0,
       boxDeleteModel: 0,
+      boxEditModel: 0,
+      form: {},
+      openPreview: null,
     };
   },
   components: {
     AdminSidebar,
+    "file-preview": FilePreview,
     pagination: Pagination,
     "v-table": VTable,
   },
@@ -87,6 +205,34 @@ export default {
     });
   },
   methods: {
+    getFileName(path) {
+      return path.split("/").at(-1);
+    },
+    saveModel(event) {
+      const f = this.form;
+
+      if (f.name && f.duration && f.height && f.weight) {
+        this.$store.dispatch("models/editModel", this.form).then((response) => {
+          if (response.status == 200) {
+            this.$toast.success("Model has been saved");
+            this.$store.dispatch("models/getModels", this.page).then(() => {
+              this.pages = Math.ceil(this.count / 20);
+            });
+          } else {
+            this.$toast.error(response.data.error);
+          }
+        });
+      } else {
+        this.$toast.error("Fill all the required fields");
+      }
+      event.preventDefault();
+    },
+    openEditModal(id) {
+      this.$store.dispatch("models/findModel", id).then((response) => {
+        this.boxEditModel = id;
+        this.form = response.data;
+      });
+    },
     openModal(id) {
       this.boxDeleteModel = id;
     },
