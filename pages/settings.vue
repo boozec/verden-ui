@@ -124,16 +124,14 @@ export default {
         });
     },
     deleteAvatar() {
-      this.$store
-        .dispatch("users/deleteAvatar", this.me.id)
-        .then((response) => {
-          if (response.status == 200) {
-            this.$toast.success("Avatar has been removed");
-            this.avatarChanged = true;
-          } else {
-            this.$toast.error("Error removing");
-          }
-        });
+      this.$store.dispatch("users/deleteAvatar").then((response) => {
+        if (response.status == 200) {
+          this.$toast.success("Avatar has been removed");
+          this.avatarChanged = true;
+        } else {
+          this.$toast.error("Error removing");
+        }
+      });
     },
     save(event) {
       const f = this.form;

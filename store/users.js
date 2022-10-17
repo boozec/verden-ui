@@ -124,13 +124,12 @@ export const actions = {
     return res;
   },
   // Delete the avatar
-  // FIX: use the right endpoint with `id`, not `me`
   async deleteAvatar({ commit, rootGetters }, id) {
     commit("loadingStatus", true, { root: true });
     let res = { status: 0, data: null };
     let api = this.$config.api;
 
-    await fetch(`${api}/v1/users/me/avatar`, {
+    await fetch(`${api}/v1/users/${id ?? "me"}/avatar`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${rootGetters["auth/accessToken"]}`,
