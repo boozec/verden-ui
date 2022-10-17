@@ -4,17 +4,19 @@
       .py-2.inline-block.min-w-full
         .overflow-hidden
           table.min-w-full
-            thead.bg-white.border-b
+            thead.bg-white.border-b(
+              class="dark:bg-gray-800 dark:border-gray-700"
+            )
               tr
-                th.text-sm.text-gray-900.px-6.py-4.text-left(scope="col" v-for="name in keys")
+                th.text-sm.text-gray-900.px-6.py-4.text-left(class="dark:text-white" scope="col" v-for="name in keys")
                   span(v-if="name == 'id'") ID
                   span.capitalize(v-else) {{ replaceUnderscores(name) }}
                 th.text-sm.text-gray-900.px-6.py-4.text-left(scope="col")
             tbody
               tr.bg-white.border-b.transition.duration-300.ease-in-out(
-                class="hover:bg-gray-100" v-for="field in fields"
+                class="hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700" v-for="field in fields"
               )
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-900.truncate(v-for="name in keys")
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-900.truncate(class="dark:text-white" v-for="name in keys")
                   div.block.truncate(:class="{'max-w-100': !['id', 'created', 'updated'].includes(name)}")
                     span(v-if="isBool(field[name])")
                       svg(v-if="field[name]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-500")
@@ -45,7 +47,7 @@
                       a.underline.text-green-500(:href="'/models/'+field.model_id" target="_blank")
                         | {{ field[name] }}
                     span(v-else :title="field[name]") {{ field[name] }}
-                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-900
+                td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-900(class="dark:text-white")
                   .flex
                     .mr-1(v-if="path")
                       a(:href="path + field.id" target="_blank")

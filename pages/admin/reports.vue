@@ -5,8 +5,10 @@
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-10.overflow-y-auto
         .flex.min-h-full.items-end.justify-center.p-4.text-center(class="sm:items-center sm:p-0")
-          .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(class="sm:my-8 sm:w-full sm:max-w-lg")
-            h3.text-xl.font-bold.text-center.p-5 Edit warning
+          .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(
+            class="sm:my-8 sm:w-full sm:max-w-lg dark:bg-gray-800"
+          )
+            h3.text-xl.font-bold.text-center.p-5(class="dark:text-white") Edit warning
             form.m-3
               .mb-5
                 label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="model") Model
@@ -42,7 +44,7 @@
                     v-model="form.admin_note"
                   )
 
-            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
+            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6 dark:bg-gray-700")
               button.inline-flex.w-full.justify-center.rounded-md.border.border-transparent.bg-green-600.px-4.py-2.text-base.font-medium.text-white.shadow-sm(
                 type="button"
                 :class="{'hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm': true, 'opacity-25 cursor-default': isLoading}"
@@ -103,7 +105,7 @@
           v-model="notResolved"
           @change="filter"
         )
-        label.form-check-label.inline-block.text-gray-800(for="notResolved")
+        label.form-check-label.inline-block.text-gray-800(class="dark:text-white" for="notResolved")
           | Show only not resolved reports
 
         v-table(

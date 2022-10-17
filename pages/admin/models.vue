@@ -17,8 +17,10 @@
       .fixed.inset-0.bg-gray-900.bg-opacity-90.transition-opacity
       .fixed.inset-0.z-9.overflow-y-auto
         .flex.min-h-full.items-end.justify-center.p-4.text-center(class="sm:items-center sm:p-0")
-          .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(class="sm:my-8 sm:w-full sm:max-w-lg")
-            h3.text-xl.font-bold.text-center.p-5 Edit model
+          .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(
+            class="sm:my-8 sm:w-full sm:max-w-lg dark:bg-gray-800"
+          )
+            h3.text-xl.font-bold.text-center.p-5(class="dark:text-white") Edit model
             form.m-3
               .mb-5
                 label.block.text-sm.font-medium.text-gray-700(class="dark:text-white" for="name") Name
@@ -84,8 +86,8 @@
 
             hr
             .my-4.mx-3
-              h4 See and/or remove files
-              ul.divide-y.divide-gray-200.rounded-md.border.border-gray-200(class="dark:border-gray-500 dark:divide-gray-500" role="list" v-if="form.uploads")
+              h4(class="dark:text-white") See and/or remove files
+              ul.divide-y.divide-gray-200.rounded-md.border.border-gray-200(class="dark:border-gray-500 dark:divide-gray-500 dark:text-white" role="list" v-if="form.uploads")
                 li.flex.items-center.justify-between.py-3.pl-3.pr-4.text-sm(v-for="upload in form.uploads" :key="upload.id")
                   .flex.w-0.flex-1.items-center
                     svg.h-5.w-5.flex-shrink-0.text-gray-400(xmlns="http://www.w3.org/2000/svg", viewbox="0 0 20 20", fill="currentColor", aria-hidden="true")
@@ -95,7 +97,7 @@
                     a.font-medium.text-black-700.cursor-pointer.mr-2(class="hover:underline" @click="openPreview = upload.filepath") Preview
                     a.font-medium.text-red-700.cursor-pointer(class="hover:underline dark:text-red-500" @click="boxDeleteModelUpload = upload.id") Delete
 
-            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
+            .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6 dark:bg-gray-700")
               button.inline-flex.w-full.justify-center.rounded-md.border.border-transparent.bg-green-600.px-4.py-2.text-base.font-medium.text-white.shadow-sm(
                 type="button"
                 :class="{'hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm': true, 'opacity-25 cursor-default': isLoading}"
