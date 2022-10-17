@@ -69,7 +69,7 @@
         v-table(
           :keys="['id', 'avatar', 'username', 'email', 'is_staff', 'name']"
           :fields="users"
-          path="/users/"
+          path="/user/"
           :editrow="openEditModal"
         )
         pagination(:page="page" :pages="pages" v-if="count" path="/admin")
