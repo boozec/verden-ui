@@ -62,7 +62,7 @@
             .mr-3.float-left(style="flex-shrink: 0;" class="sm:float-none")
               user-avatar(:data="warning.user")
             p.leading-8.ml-2(class="sm:ml-0")
-              a.text-green-800(class="hover:text-green-700 dark:text-green-200 dark:hover:text-green-100" :href="'/user/'+warning.user.id")
+              nuxt-link.text-green-800(class="hover:text-green-700 dark:text-green-200 dark:hover:text-green-100" :to="'/user/'+warning.user.id")
                 | @
                 span.underline {{ warning.user.username }}
             p.leading-8.ml-0(class="sm:ml-5") {{ warning.note }}
@@ -87,7 +87,7 @@
             .mr-3.float-left(style="flex-shrink: 0;" class="sm:float-none")
               user-avatar(:data="warning.resolved")
             p.leading-8.ml-2(class="sm:ml-0")
-              a.text-green-800(class="hover:text-green-700 dark:text-green-200 dark:hover:text-green-100" :href="'/user/'+warning.user.id")
+              nuxt-link.text-green-800(class="hover:text-green-700 dark:text-green-200 dark:hover:text-green-100" :to="'/user/'+warning.user.id")
                 | @
                 span.underline {{ warning.resolved.username }}
             p.leading-8.ml-0(class="sm:ml-5") {{ warning.admin_note }}

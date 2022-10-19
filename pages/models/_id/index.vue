@@ -7,7 +7,7 @@
           .relative.transform.overflow-hidden.rounded-lg.bg-white.text-left.shadow-xl.transition-all(class="sm:my-8 sm:w-full sm:max-w-lg")
             .bg-white.px-4.pt-5.pb-4(class="sm:p-6 sm:pb-4")
               div
-                h2 You must <a class="underline" :href="'/signin?ref=/models/'+model.id">log in</a> first.
+                h2 You must <nuxt-link class="underline" :to="'/signin?ref=/models/'+model.id">log in</nuxt-link> first.
             .bg-gray-50.px-4.py-3(class="sm:flex sm:flex-row-reverse sm:px-6")
               button.mt-3.inline-flex.w-full.justify-center.rounded-md.border.border-gray-300.bg-white.px-4.py-2.text-base.font-medium.text-gray-700.shadow-sm(
                 type="button"
@@ -92,7 +92,7 @@
             .mr-3.float-left
               user-avatar(:data="model.author")
             p.leading-8
-              a.text-green-800(class="hover:text-green-700 dark:text-green-300 dark:hover:text-green-200" :href="'/user/'+model.author_id")
+              nuxt-link.text-green-800(class="hover:text-green-700 dark:text-green-300 dark:hover:text-green-200" :to="'/user/'+model.author_id")
                 | @
                 span.underline {{ model.author.username }}
       .description.mt-3(class="dark:text-white")
@@ -122,9 +122,9 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
         </svg>
         | Report
-      a.inline-flex.leading-6.justify-center.rounded-md.border.border-transparent.bg-gray-600.py-2.px-4.mr-2.text-sm.font-medium.text-white.shadow-sm(
+      nuxt-link.inline-flex.leading-6.justify-center.rounded-md.border.border-transparent.bg-gray-600.py-2.px-4.mr-2.text-sm.font-medium.text-white.shadow-sm(
         class="hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-        :href="'/models/'+model.id+'/edit'" v-if="me && (me.is_staff || me.id == model.author_id)"
+        :to="'/models/'+model.id+'/edit'" v-if="me && (me.is_staff || me.id == model.author_id)"
       )
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-1">
           <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
@@ -208,7 +208,7 @@
               path(fill-rule="evenodd", d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z", clip-rule="evenodd")
             span.ml-2.w-0.flex-1.truncate {{ getFileName(upload.filepath) }}
           .ml-4.flex-shrink-0
-            a.font-medium.text-black-700(:href="baseAPI + '' + upload.filepath" target="_new" download class="hover:underline") Download
+            nuxt-link.font-medium.text-black-700(:to="baseAPI + '' + upload.filepath" target="_new" download class="hover:underline") Download
 
 
 </template>

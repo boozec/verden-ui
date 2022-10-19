@@ -1,7 +1,7 @@
 <template lang="pug">
   .mx-auto.w-90p.py-6#modelpage(class="sm:px-6 lg:px-8 md:max-w-7xl")
     h1.text-3xl.font-bold(class="dark:text-white") Edit {{ model.name }}
-    a.mt-3.mb-5.block.flex(:href="'/models/'+model.id" class="hover:underline dark:text-white")
+    nuxt-link.mt-3.mb-5.block.flex(:to="'/models/'+model.id" class="hover:underline dark:text-white")
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
       </svg>
