@@ -10,6 +10,7 @@ how to run locally this app and how to set up on production.
 # Development
 
 It works with Node v14.6 and Vue 2.
+If you use [nvm](https://github.com/nvm-sh/nvm) you can just call `nvm use` into the folder.
 
 1. Clone this repo
    ```
